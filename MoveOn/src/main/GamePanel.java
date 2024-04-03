@@ -1,4 +1,4 @@
-package main;
+ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,9 +22,16 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
 	
+	public final int maxWorldCol = 50;
+	public final int maxWorldRow = 50;
+	public final int WorldWidth = tileSize * maxWorldCol;
+	public final int WorldHeight = tileSize * maxWorldRow;
+	
+	
+	
 	KeyHandler keyHandler = new KeyHandler();
 	Thread gameThread;
-	Player player = new Player(this,keyHandler);
+	public Player player = new Player(this,keyHandler);
 	TileManager tileM = new TileManager(this);
 	
 	static final int FPS = 60;
@@ -47,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	@Override
 	public void run() {
-		double drawInterval = 1000000000/FPS;
+		double drawInterval = 1000000000/FPS; // draw 60 times per second
 		double delta = 0;
 		long lastTime = System.nanoTime();
 		long currentTime;
