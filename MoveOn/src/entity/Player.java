@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -59,17 +58,24 @@ public class Player extends Entity{
 			
 			if(keyH.upPressed == Boolean.TRUE) {
 				direction = "up";
-				worldY -= speed;
 			}else if(keyH.downPressed == Boolean.TRUE) {
 				direction = "down";
-				worldY += speed;
 			}else if(keyH.leftPressed == Boolean.TRUE) {
 				direction = "left";
-				worldX -= speed;
 			}else if(keyH.rightPressed == Boolean.TRUE){
 				direction = "right";
-				worldX += speed;
 			}
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			if (collisionOn == false){
+				switch (direction) {
+					case "up": worldY -= speed; break;
+					case "down": worldY += speed; break;
+					case "left": worldX -= speed; break;
+					case "right": worldX += speed; break;
+				}
+			}
+
 			spriteCounter++;
 			if(spriteCounter > 12) {
 				if(spriteNum ==1) {
