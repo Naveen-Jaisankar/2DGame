@@ -14,6 +14,7 @@ public class Player extends Entity{
 	GamePanel gp;
 	KeyHandler keyH;
 	public final int screenX, screenY;
+	int hasKey = 0; //Number of Keys or Rewards collected by the player
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -24,6 +25,8 @@ public class Player extends Entity{
 		solidArea = new Rectangle();
 		solidArea.x = 8;
 		solidArea.y = 16;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		solidArea.width=32;
 		solidArea.height = 32;
 		setDefaultValues();
@@ -65,8 +68,17 @@ public class Player extends Entity{
 			}else if(keyH.rightPressed == Boolean.TRUE){
 				direction = "right";
 			}
+			
+			//Check Tile Collision
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
+			
+			
+			//Check Object Collision
+			int objIndex =  gp.cChecker.checkObject(this, true);
+			pickUpObject(objIndex);
+			
+			//If collision is false, player can move
 			if (collisionOn == false){
 				switch (direction) {
 					case "up": worldY -= speed; break;
@@ -88,6 +100,32 @@ public class Player extends Entity{
 		}
 		
 	}
+	
+	public void pickUpObject(int index) {
+		
+		if(index != 999) {
+			String objectName = gp.obj[index].name;
+			switch(objectName) {
+			case "Key":
+				hasKey++;
+				gp.obj[index]= null;
+				break;
+			case "Door":
+				if(hasKey > 0) {
+					gp.obj[index] = null;
+					hasKey--;
+				}
+				break;
+			case "Boots":
+				//TODO Not needed please remove later
+				speed += 1;
+				gp.obj[index] = null;
+				break;
+			}
+		}
+		
+	}
+	
 	
 	public void draw(Graphics2D g2) {
 		
