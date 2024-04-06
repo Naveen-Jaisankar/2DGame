@@ -9,6 +9,11 @@ public class CollisionChecker {
     }
 
     public void checkTile(Entity entity){
+    	/*
+    	 * entity.world.x -> player's starting point
+    	 * entity.solidArea.x -> player's collision starting point 
+    	 * entity.solidArea.width/height -> length of player's collision 
+    	 */
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
         int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
         int entityTopWorldY = entity.worldY + entity.solidArea.y;
