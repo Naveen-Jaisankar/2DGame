@@ -14,7 +14,7 @@ public class Player extends Entity{
 	GamePanel gp;
 	KeyHandler keyH;
 	public final int screenX, screenY;
-	int hasKey = 0; //Number of Keys or Rewards collected by the player
+	public int hasKey = 0; //Number of Keys or Rewards collected by the player
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -107,10 +107,12 @@ public class Player extends Entity{
 			String objectName = gp.obj[index].name;
 			switch(objectName) {
 			case "Key":
+				gp.playSoundEffect(1);
 				hasKey++;
 				gp.obj[index]= null;
 				break;
 			case "Door":
+				gp.playSoundEffect(3);
 				if(hasKey > 0) {
 					gp.obj[index] = null;
 					hasKey--;
@@ -118,6 +120,7 @@ public class Player extends Entity{
 				break;
 			case "Boots":
 				//TODO Not needed please remove later
+				gp.playSoundEffect(2);
 				speed += 1;
 				gp.obj[index] = null;
 				break;
