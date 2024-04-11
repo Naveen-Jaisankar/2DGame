@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//Game assets
 	TileManager tileM = new TileManager(this);
-	KeyHandler keyHandler = new KeyHandler();
+	KeyHandler keyHandler = new KeyHandler(this);
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
@@ -110,7 +110,12 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void update() {
 		
-		player.update();
+		if(gameState == playState) {
+			player.update();
+		}
+		if(gameState == pauseState) {
+			
+		}
 		
 	}
 	

@@ -3,15 +3,15 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
 import object.OBJ_Key;
 
 public class UI {
 	GamePanel gp;
+	Graphics2D g2;
 	Font arial_40,arial_80B;
-	BufferedImage keyImage;
+//	BufferedImage keyImage;
 	public boolean messageOn = Boolean.FALSE;
 	public String message = "";
 	int messageCounter = 0;
@@ -26,7 +26,7 @@ public class UI {
 		arial_40 =  new Font("Arial",Font.PLAIN,40);
 		arial_80B =  new Font("Arial",Font.BOLD,80);
 		OBJ_Key key = new OBJ_Key(gp);
-		keyImage = key.image;
+//		keyImage = key.image;
 	}
 	
 	
@@ -34,6 +34,9 @@ public class UI {
 		message = text;
 		messageOn = true;
 	}
+	
+	/**
+	 * This draw method is the v1.
 	public void draw(Graphics2D g2) {
 		
 		if(gameFinished) {
@@ -80,7 +83,7 @@ public class UI {
 		}else {
 			g2.setFont(arial_40);
 			g2.setColor(Color.white);
-			g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2,gp.tileSize,gp.tileSize,null);
+//			g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2,gp.tileSize,gp.tileSize,null);
 			g2.drawString("x "+ gp.player.hasKey,74, 65);
 			
 			//Time
@@ -98,5 +101,35 @@ public class UI {
 				}
 			}
 		}
+	}
+	**/
+	
+	public void draw(Graphics2D g2) {
+		this.g2 =g2;
+		g2.setFont(arial_40);
+		g2.setColor(Color.white);
+		
+		if(gp.gameState == gp.playState) {
+			//Later
+		}
+		
+		if(gp.gameState == gp.pauseState) {
+			drawPauseScreen();
+		}
+	}
+	
+	public void drawPauseScreen() {
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
+		String text = "Paused";
+		int x = getXForCenteredText(text);
+		int y = gp.screenHeight/2;
+		
+		g2.drawString(text, x, y);
+	}
+	
+	public int getXForCenteredText(String text) {
+		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		return (gp.screenWidth/2 - length/2);
+	
 	}
 }
