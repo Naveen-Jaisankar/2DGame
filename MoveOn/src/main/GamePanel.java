@@ -45,6 +45,13 @@ public class GamePanel extends JPanel implements Runnable{
 	static final int FPS = 60;
 	
 	
+	//GAME STATE
+	public int gameState;
+	//TODO : Implement enum for this constants later, for readability
+	public final int playState = 1;
+	public final int pauseState =2;
+	
+	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth,screenHeight));
 		this.setBackground(Color.black);
@@ -57,6 +64,8 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		aSetter.setObject();
 //		playMusic(0);
+//		stopMusic();
+		gameState = playState;
 	}
 	
 	public void startGamethread() {
@@ -110,6 +119,12 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
+		//For debugging purpose
+		long drawStart = 0;
+		if(keyHandler.checkDrawtime) {
+			drawStart = System.nanoTime();
+		}
+				
 		tileM.draw(g2);
 
 		for(int i=0; i<obj.length;i++){
@@ -120,6 +135,15 @@ public class GamePanel extends JPanel implements Runnable{
 		player.draw(g2);
 		
 		ui.draw(g2);
+		
+		if(keyHandler.checkDrawtime) {
+			long drawEnd = System.nanoTime();
+			long passed = drawEnd - drawStart;
+			g2.setColor(Color.white);
+			g2.drawString("Draw Time:" + passed, 10, 400);
+			System.out.println("Draw Time : " + passed);
+		}
+		
 		
 		g2.dispose();
 		

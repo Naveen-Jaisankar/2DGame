@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Player extends Entity{
 	
@@ -41,20 +42,29 @@ public class Player extends Entity{
 	}
 	
 	public void getPlayerImage() {
+		up1 = setup("boy_up_1");
+		up2 = setup("boy_up_2");
+		down1 = setup("boy_down_1");
+		down2 = setup("boy_down_2");
+		left1 = setup("boy_left_1");
+		left2 = setup("boy_left_2");
+		right1 = setup("boy_right_1");
+		right2 = setup("boy_right_2");
+	}
+	
+	public BufferedImage setup(String imageName) {
+		UtilityTool uTool = new UtilityTool();
+		BufferedImage scaledImage = null;
+		
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
-			
+			scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/"+imageName+".png"));
+			scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return scaledImage;
 	}
+	
 	
 	public void update() {
 		if(keyH.upPressed == Boolean.TRUE || keyH.downPressed == Boolean.TRUE || keyH.leftPressed == Boolean.TRUE || keyH.rightPressed == Boolean.TRUE) {
@@ -105,26 +115,38 @@ public class Player extends Entity{
 		
 		if(index != 999) {
 			String objectName = gp.obj[index].name;
+			objectName.length();
 			switch(objectName) {
 			case "Key":
 				gp.playSoundEffect(1);
 				hasKey++;
 				gp.obj[index]= null;
+				gp.ui.showMessage("You got a key!");
 				break;
 			case "Door":
 				gp.playSoundEffect(3);
 				if(hasKey > 0) {
 					gp.obj[index] = null;
 					hasKey--;
+					gp.ui.showMessage("You opened the door!");
+				}else {
+					gp.ui.showMessage("You need a key");
 				}
 				break;
 			case "Boots":
 				//TODO Not needed please remove later
+				gp.ui.showMessage("Speed up");
 				gp.playSoundEffect(2);
 				speed += 1;
 				gp.obj[index] = null;
 				break;
+			case "Chest":
+				gp.ui.gameFinished = Boolean.TRUE;
+//				gp.stopMusic();
+				gp.playSoundEffect(4);
+				break;
 			}
+			
 		}
 		
 	}
@@ -167,6 +189,6 @@ public class Player extends Entity{
 			}
 			break;
 		}
-		g2.drawImage(image, screenX, screenY, gp.tileSize,gp.tileSize,null);
+		g2.drawImage(image, screenX, screenY, null);
 	}
 }
