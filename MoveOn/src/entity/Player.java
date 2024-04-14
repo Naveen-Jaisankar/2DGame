@@ -12,13 +12,11 @@ import main.UtilityTool;
 
 public class Player extends Entity{
 	
-	GamePanel gp;
 	KeyHandler keyH;
 	public final int screenX, screenY;
-//	public int hasKey = 0; //Number of Keys or Rewards collected by the player
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
+		super(gp);
 		this.keyH = keyH;
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
@@ -42,30 +40,17 @@ public class Player extends Entity{
 	}
 	
 	public void getPlayerImage() {
-		up1 = setup("boy_up_1");
-		up2 = setup("boy_up_2");
-		down1 = setup("boy_down_1");
-		down2 = setup("boy_down_2");
-		left1 = setup("boy_left_1");
-		left2 = setup("boy_left_2");
-		right1 = setup("boy_right_1");
-		right2 = setup("boy_right_2");
+		up1 = setup("/player/boy_up_1");
+		up2 = setup("/player/boy_up_2");
+		down1 = setup("/player/boy_down_1");
+		down2 = setup("/player/boy_down_2");
+		left1 = setup("/player/boy_left_1");
+		left2 = setup("/player/boy_left_2");
+		right1 = setup("/player/boy_right_1");
+		right2 = setup("/player/boy_right_2");
 	}
 	
-	public BufferedImage setup(String imageName) {
-		UtilityTool uTool = new UtilityTool();
-		BufferedImage scaledImage = null;
 		
-		try {
-			scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/"+imageName+".png"));
-			scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return scaledImage;
-	}
-	
-	
 	public void update() {
 		if(keyH.upPressed == Boolean.TRUE || keyH.downPressed == Boolean.TRUE || keyH.leftPressed == Boolean.TRUE || keyH.rightPressed == Boolean.TRUE) {
 			
@@ -88,6 +73,11 @@ public class Player extends Entity{
 			int objIndex =  gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
+//			check NPC COllision
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
+			
+			
 			//If collision is false, player can move
 			if (collisionOn == false){
 				switch (direction) {
@@ -109,6 +99,12 @@ public class Player extends Entity{
 			}
 		}
 		
+	}
+	public void interactNPC(int index) {
+		if(index!=999) {
+			System.out.println("You are hitting a NPC");
+			
+		}
 	}
 	
 	public void pickUpObject(int index) {
