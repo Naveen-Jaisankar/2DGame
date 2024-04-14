@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 	
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed,enterPressed;
 	//Debug
 	boolean checkDrawtime = Boolean.FALSE;
 	
@@ -17,12 +17,82 @@ public class KeyHandler implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {		
+		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		if(code == KeyEvent.VK_W 
+		// Title state
+		if(gp.gameState == gp.titleState){
+			if(gp.ui.titleScreenState ==0){
+				if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+				gp.ui.commandNum--;
+				if(gp.ui.commandNum<0){
+					gp.ui.commandNum=2;
+				}
+			}
+			if(code == KeyEvent.VK_S
+			|| code == KeyEvent.VK_DOWN) {
+				gp.ui.commandNum++;
+				if(gp.ui.commandNum>2){
+					gp.ui.commandNum=0;
+				}	
+			}
+			if(code == KeyEvent.VK_ENTER) {
+				if(gp.ui.commandNum==0){
+					gp.ui.titleScreenState =1;
+				}	
+				if(gp.ui.commandNum==1){
+					// gp.gameState = add later
+				}	
+				if(gp.ui.commandNum==2){
+					System.exit(0);
+				}	
+			}
+			}
+			else if(gp.ui.titleScreenState ==1){
+			if(code == KeyEvent.VK_W 
+				|| code == KeyEvent.VK_UP) {
+				gp.ui.commandNum --;
+				if(gp.ui.commandNum<0){
+					gp.ui.commandNum=3;
+				}
+			}
+			if(code == KeyEvent.VK_S
+					|| code == KeyEvent.VK_DOWN) {
+				gp.ui.commandNum ++;
+				if(gp.ui.commandNum>3){
+					gp.ui.commandNum=0;
+				}	
+			}
+			if(code == KeyEvent.VK_ENTER) {
+				if(gp.ui.commandNum==0){
+					System.err.println("fighter stuff!");
+					gp.gameState = gp.playState;
+					gp.playMusic(0);
+				}	
+				if(gp.ui.commandNum==1){
+					System.err.println("thief stuff!");
+					gp.gameState = gp.playState;
+					gp.playMusic(0);
+				}	
+				if(gp.ui.commandNum==2){
+					System.err.println("sorcerer stuff!");
+					gp.gameState = gp.playState;
+					gp.playMusic(0);
+				}	
+				if(gp.ui.commandNum==3){
+					gp.ui.titleScreenState = 0;
+					gp.ui.commandNum=0;
+				}
+			}}
+
+		}
+		// play state
+		if(gp.gameState == gp.playState){
+			
+			if(code == KeyEvent.VK_W 
 				|| code == KeyEvent.VK_UP) {
 			upPressed = Boolean.TRUE;
 		}
@@ -38,14 +108,13 @@ public class KeyHandler implements KeyListener{
 				|| code == KeyEvent.VK_RIGHT) {
 			rightPressed = Boolean.TRUE;
 		}
-		
 		if(code == KeyEvent.VK_P) {
-			if(gp.gameState == gp.playState) {
-				gp.gameState= gp.pauseState;
-			}
-			else if(gp.gameState == gp.pauseState) {
-				gp.gameState = gp.playState;
-			}
+			gp.gameState= gp.pauseState;
+			
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+			
 		}
 		
 		
@@ -56,6 +125,26 @@ public class KeyHandler implements KeyListener{
 				checkDrawtime = Boolean.FALSE;
 			}
 		}
+		}
+		// Pause state
+		else if(gp.gameState == gp.pauseState){
+			if(code == KeyEvent.VK_P) {
+				gp.gameState= gp.playState;
+				
+			}
+			
+		}
+		// Dialogue state
+		else if(gp.gameState == gp.dialougeState){
+			if(code == KeyEvent.VK_ENTER) {
+				gp.gameState= gp.playState;
+				
+			}
+
+		}
+		
+		
+		
 	}
 
 	

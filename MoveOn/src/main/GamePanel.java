@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//Game assets
 	TileManager tileM = new TileManager(this);
-	KeyHandler keyHandler = new KeyHandler(this);
+	public KeyHandler keyHandler = new KeyHandler(this);
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
@@ -49,9 +49,11 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//GAME STATE
 	public int gameState;
-	//TODO : Implement enum for this constants later, for readability
+	// Implement enum for this constants later, for readability
+	public final int titleState = 0;
 	public final int playState = 1;
 	public final int pauseState =2;
+	public final int dialougeState =3;
 	
 	
 	public GamePanel() {
@@ -68,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setNPC();
 //		playMusic(0);
 //		stopMusic();
-		gameState = playState;
+		gameState = titleState;
 	}
 	
 	public void startGamethread() {
@@ -102,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 			if(timer >= 1000000000) {
-//				System.out.println("FPS:" + drawCount);
+				System.out.println("FPS:" + drawCount);
 				drawCount = 0;
 				timer = 0;
 			}
@@ -140,8 +142,13 @@ public class GamePanel extends JPanel implements Runnable{
 		if(keyHandler.checkDrawtime) {
 			drawStart = System.nanoTime();
 		}
-		
-		//Tile
+		// Title screen
+		if(gameState == titleState){
+			ui.draw(g2);
+		}
+		else {
+
+			//Tile
 		tileM.draw(g2);
 		
 		//Object
@@ -150,21 +157,21 @@ public class GamePanel extends JPanel implements Runnable{
 				obj[i].draw(g2,this);
 			}
 		}
-		
+
+		//NPC
 		for(int i=0; i<npc.length;i++){
 			if(npc[i]!=null){
 				npc[i].draw(g2);
 			}
 		}
-		
-		//NPC
-		
-		
 		//Player
 		player.draw(g2);
-		
+		// UI
 		ui.draw(g2);
+		}
 		
+		
+		// debug
 		if(keyHandler.checkDrawtime) {
 			long drawEnd = System.nanoTime();
 			long passed = drawEnd - drawStart;
