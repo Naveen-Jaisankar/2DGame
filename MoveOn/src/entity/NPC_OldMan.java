@@ -29,7 +29,7 @@ public class NPC_OldMan extends Entity{
 	public void setDialogue(){
 		dialogues[0] = "Hello!, Lad.";
 		dialogues[1] = "So you've come to this island \nto find the treasure!";
-		dialogues[2] = "I used to be a great wizard but now...\nI'm bit too old for taking an adventure.";
+		dialogues[2] = "I used to be a great wizard \nbut now... I'm bit too old \nfor taking an adventure.";
 		dialogues[3] = "Well, good luck on you.";
 	}
 	public void setAction() {
