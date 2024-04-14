@@ -4,11 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
 
 public class Player extends Entity{
 	
@@ -133,7 +130,7 @@ public class Player extends Entity{
 //				}
 //				break;
 //			case "Boots":
-//				//TODO Not needed please remove later
+//				// Not needed please remove later
 //				gp.ui.showMessage("Speed up");
 //				gp.playSoundEffect(2);
 //				speed += 1;
