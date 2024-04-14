@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 	
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed,enterPressed;
 	//Debug
 	boolean checkDrawtime = Boolean.FALSE;
 	
@@ -22,7 +22,9 @@ public class KeyHandler implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		if(code == KeyEvent.VK_W 
+		if(gp.gameState == gp.playState){
+			// play state
+			if(code == KeyEvent.VK_W 
 				|| code == KeyEvent.VK_UP) {
 			upPressed = Boolean.TRUE;
 		}
@@ -38,14 +40,13 @@ public class KeyHandler implements KeyListener{
 				|| code == KeyEvent.VK_RIGHT) {
 			rightPressed = Boolean.TRUE;
 		}
-		
 		if(code == KeyEvent.VK_P) {
-			if(gp.gameState == gp.playState) {
-				gp.gameState= gp.pauseState;
-			}
-			else if(gp.gameState == gp.pauseState) {
-				gp.gameState = gp.playState;
-			}
+			gp.gameState= gp.pauseState;
+			
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+			
 		}
 		
 		
@@ -56,6 +57,26 @@ public class KeyHandler implements KeyListener{
 				checkDrawtime = Boolean.FALSE;
 			}
 		}
+		}
+		// Pause state
+		else if(gp.gameState == gp.pauseState){
+			if(code == KeyEvent.VK_P) {
+				gp.gameState= gp.playState;
+				
+			}
+			
+		}
+		// Dialogue state
+		else if(gp.gameState == gp.dialougeState){
+			if(code == KeyEvent.VK_ENTER) {
+				gp.gameState= gp.playState;
+				
+			}
+
+		}
+		
+		
+		
 	}
 
 	

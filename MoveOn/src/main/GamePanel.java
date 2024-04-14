@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//Game assets
 	TileManager tileM = new TileManager(this);
-	KeyHandler keyHandler = new KeyHandler(this);
+	public KeyHandler keyHandler = new KeyHandler(this);
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//TODO : Implement enum for this constants later, for readability
 	public final int playState = 1;
 	public final int pauseState =2;
+	public final int dialougeState =3;
 	
 	
 	public GamePanel() {
@@ -162,7 +163,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//Player
 		player.draw(g2);
-		
+		// UI
 		ui.draw(g2);
 		
 		if(keyHandler.checkDrawtime) {
