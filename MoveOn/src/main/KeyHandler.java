@@ -70,17 +70,17 @@ public class KeyHandler implements KeyListener{
 				if(gp.ui.commandNum==0){
 					System.err.println("fighter stuff!");
 					gp.gameState = gp.playState;
-					gp.playMusic(0);
+//					gp.playMusic(0);
 				}	
 				if(gp.ui.commandNum==1){
 					System.err.println("thief stuff!");
 					gp.gameState = gp.playState;
-					gp.playMusic(0);
+//					gp.playMusic(0);
 				}	
 				if(gp.ui.commandNum==2){
 					System.err.println("sorcerer stuff!");
 					gp.gameState = gp.playState;
-					gp.playMusic(0);
+//					gp.playMusic(0);
 				}	
 				if(gp.ui.commandNum==3){
 					gp.ui.titleScreenState = 0;
