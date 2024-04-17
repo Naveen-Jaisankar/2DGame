@@ -57,6 +57,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int dialougeState =3;
 	
 	
+	//Player
+	public boolean isPlayerInContactWithVehicle = Boolean.FALSE;
+	
+	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth,screenHeight));
 		this.setBackground(Color.black);
@@ -166,7 +170,9 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 		//Player
-		player.draw(g2);
+		if(!isPlayerInContactWithVehicle) {
+			player.draw(g2);
+		}
 		// UI
 		ui.draw(g2);
 		}

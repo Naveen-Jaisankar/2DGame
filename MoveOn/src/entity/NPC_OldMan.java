@@ -71,12 +71,15 @@ public class NPC_OldMan extends Entity{
 			if(gp.keyHandler.fPressed) {
 				gp.keyHandler.fPressed=Boolean.FALSE;
 				isInteracted = Boolean.TRUE;
+				gp.isPlayerInContactWithVehicle = Boolean.TRUE;
 			}
 			if(worldY<=DESTINATION_Y*gp.tileSize) {
 				worldY += speed;
+				gp.player.worldY += speed;
 			}else if(worldY >= DESTINATION_Y*gp.tileSize) {
 				System.out.println("going to turn of interaction");
 				isInteracted = Boolean.FALSE;
+				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
 			
 		}
