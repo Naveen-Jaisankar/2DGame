@@ -67,7 +67,8 @@ public class NPC_OldMan extends Entity{
 	}
 	
 	public void update() {
-		if(gp.keyHandler.fPressed || isInteracted) {
+		int npcIndex = gp.cChecker.checkEntity(gp.player, gp.npc);
+		if(npcIndex!=999 & (gp.keyHandler.fPressed || isInteracted)) {
 			if(gp.keyHandler.fPressed) {
 				gp.keyHandler.fPressed=Boolean.FALSE;
 				isInteracted = Boolean.TRUE;
