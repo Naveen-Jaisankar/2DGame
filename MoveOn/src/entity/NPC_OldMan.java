@@ -5,6 +5,10 @@ import java.util.Random;
 import main.GamePanel;
 
 public class NPC_OldMan extends Entity{
+	
+	public boolean isInteracted = Boolean.FALSE;
+	private static final int DESTINATION_X = 23;
+	private static final int DESTINATION_Y = 42;
 
 	public NPC_OldMan(GamePanel gp) {
 		super(gp);
@@ -27,10 +31,7 @@ public class NPC_OldMan extends Entity{
 		right2 = setup("/npc/oldman_right_2");
 	}
 	public void setDialogue(){
-		dialogues[0] = "Hello!, Lad.";
-		dialogues[1] = "So you've come to this island \nto find the treasure!";
-		dialogues[2] = "I used to be a great wizard \nbut now... I'm bit too old \nfor taking an adventure.";
-		dialogues[3] = "Well, good luck on you.";
+		dialogues[0] = "Press F to Enter the bus";
 	}
 	public void setAction() {
 		actionLockCounter++;
@@ -55,10 +56,34 @@ public class NPC_OldMan extends Entity{
 		
 	}      
 	
-	public void speak(){
-		super.speak();
-
+	public void isInteracted() {
+		openDialogBox();
 	}
+	
+	public void openDialogBox(){
+			gp.gameState = gp.dialougeState;
+			super.openDialogBox();
+			
+	}
+	
+	public void update() {
+		if(gp.keyHandler.fPressed || isInteracted) {
+			if(gp.keyHandler.fPressed) {
+				gp.keyHandler.fPressed=Boolean.FALSE;
+				isInteracted = Boolean.TRUE;
+			}
+			if(worldY<=DESTINATION_Y*gp.tileSize) {
+				worldY += speed;
+			}else if(worldY >= DESTINATION_Y*gp.tileSize) {
+				System.out.println("going to turn of interaction");
+				isInteracted = Boolean.FALSE;
+			}
+			
+		}
+	}
+	
+	
+	
 	
 	
 

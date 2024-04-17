@@ -48,28 +48,31 @@ public class Entity {
 		return scaledImage;
 	}
 	public void setAction() {}
-	public void speak(){
+	
+	public void isInteracted() {}
+	
+	public void openDialogBox(){
 		if(dialogues[dialogueIndex]==null){
 			dialogueIndex =0;
 		}
 		gp.ui.currentDialogue = dialogues[dialogueIndex];
 		dialogueIndex++;
-		switch (gp.player.direction) {
-			case "up":
-				direction="down";
-				break;
-			case "down":
-				direction="up";
-				break;
-			case "left":
-				direction="right";
-				break;
-			case "right":
-				direction="left";
-				break;
-			default:
-				break;
-		}
+//		switch (gp.player.direction) {
+//			case "up":
+//				direction="down";
+//				break;
+//			case "down":
+//				direction="up";
+//				break;
+//			case "left":
+//				direction="right";
+//				break;
+//			case "right":
+//				direction="left";
+//				break;
+//			default:
+//				break;
+//		}
 	}
 	public void update() {
 		setAction();
