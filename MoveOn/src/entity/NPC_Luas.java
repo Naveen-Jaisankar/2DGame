@@ -4,16 +4,16 @@ import java.util.Random;
 
 import main.GamePanel;
 
-public class NPC_OldMan extends Entity{
+public class NPC_Luas extends Entity{
 	
 	public boolean isInteracted = Boolean.FALSE;
 	private static final int DESTINATION_X = 23;
-	private static final int DESTINATION_Y = 42;
+	private static final int DESTINATION_Y = 12;
 
-	public NPC_OldMan(GamePanel gp) {
+	public NPC_Luas(GamePanel gp) {
 		super(gp);
 		
-		direction = "down";
+		direction = "up";
 		speed = 1;
 		
 		getImage();
@@ -21,18 +21,19 @@ public class NPC_OldMan extends Entity{
 	}
 	
 	public void getImage() {
-		up1 = setup("/npc/oldman_up_1");
-		up2 = setup("/npc/oldman_up_2");
-		down1 = setup("/npc/oldman_down_1");
-		down2 = setup("/npc/oldman_down_2");
-		left1 = setup("/npc/oldman_left_1");
-		left2 = setup("/npc/oldman_left_2");
-		right1 = setup("/npc/oldman_right_1");
-		right2 = setup("/npc/oldman_right_2");
+		up1 = setup("/npc/merchant_down_1");
+		up2 = setup("/npc/merchant_down_1");
+		down1 = setup("/npc/merchant_down_1");
+		down2 = setup("/npc/merchant_down_1");
+		left1 = setup("/npc/merchant_down_1");
+		left2 = setup("/npc/merchant_down_1");
+		right1 = setup("/npc/merchant_down_1");
+		right2 = setup("/npc/merchant_down_1");
 	}
 	public void setDialogue(){
-		dialogues[0] = "Press F to Enter the bus";
+		dialogues[0] = "Press F to Enter the cycle";
 	}
+	
 	public void setAction() {
 		actionLockCounter++;
 		if(actionLockCounter ==120) {
@@ -67,17 +68,18 @@ public class NPC_OldMan extends Entity{
 	}
 	
 	public void update() {
-		int npcIndex = gp.cChecker.checkEntity(gp.player, gp.npc);
+		int npcIndex = gp.cChecker.checkEntity(gp.player, this);
 		if(npcIndex!=999 & (gp.keyHandler.fPressed || isInteracted)) {
 			if(gp.keyHandler.fPressed) {
 				gp.keyHandler.fPressed=Boolean.FALSE;
 				isInteracted = Boolean.TRUE;
 				gp.isPlayerInContactWithVehicle = Boolean.TRUE;
+				System.out.println("Luas" + gp.isPlayerInContactWithVehicle);
 			}
-			if(worldY<=DESTINATION_Y*gp.tileSize) {
-				worldY += speed;
-				gp.player.worldY += speed;
-			}else if(worldY >= DESTINATION_Y*gp.tileSize) {
+			if(worldY>=DESTINATION_Y*gp.tileSize) {
+				worldY -= speed;
+				gp.player.worldY -= speed;
+			}else if(worldY <= DESTINATION_Y*gp.tileSize) {
 				System.out.println("going to turn of interaction");
 				isInteracted = Boolean.FALSE;
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
@@ -85,10 +87,6 @@ public class NPC_OldMan extends Entity{
 			
 		}
 	}
-	
-	
-	
-	
 	
 
 }

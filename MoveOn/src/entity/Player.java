@@ -75,7 +75,7 @@ public class Player extends Entity{
 			pickUpObject(objIndex);
 			
 //			check NPC COllision
-			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			int npcIndex = gp.cChecker.checkEntity1(this, gp.npc);
 			interactNPC(npcIndex);
 			gp.eHandler.checkEvent();
 			gp.keyHandler.enterPressed = false;
@@ -104,6 +104,9 @@ public class Player extends Entity{
 	}
 	public void interactNPC(int index) {
 		if(index!=999) {
+			if(gp.keyHandler.fPressed) {
+				gp.keyHandler.fPressed = Boolean.FALSE;
+			}
 			gp.npc[index].isInteracted();			
 		}
 	}

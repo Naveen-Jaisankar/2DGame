@@ -126,9 +126,12 @@ public class CollisionChecker {
     	
     	return index;
     }
+    
+    
 //    NPC collision
-    public int checkEntity(Entity entity, Entity[] target) {
-int index = 999;
+    public int checkEntity1(Entity entity, Entity[] target) {
+
+    	int index = 999;
     	
     	for(int i=0;i<target.length;i++) {
     		if(target[i] != null) {
@@ -185,6 +188,67 @@ int index = 999;
     	
     	return index;
     }
+    
+    
+    public int checkEntity(Entity entity, Entity target) {
+
+    	int index = 999;
+    	
+		if(target != null) {
+			//Get entity's solid area position
+			
+			entity.solidArea.x = entity.worldX + entity.solidArea.x;
+			entity.solidArea.y = entity.worldY + entity.solidArea.y;
+			
+			//Get the object's solid area position
+			target.solidArea.x = target.worldX + target.solidArea.x;
+			target.solidArea.y = target.worldY + target.solidArea.y;
+			
+			switch(entity.direction) {
+			case "up":
+				entity.solidArea.y -= entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			case "down":
+				entity.solidArea.y += entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			case "left":
+				entity.solidArea.x -= entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			case "right":
+				entity.solidArea.x += entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			}
+			entity.solidArea.x = entity.solidAreaDefaultX;
+    		entity.solidArea.y = entity.solidAreaDefaultY;
+    		target.solidArea.x = target.solidAreaDefaultX;
+    		target.solidArea.y = target.solidAreaDefaultY;
+		}
+    		
+    	
+    	
+    	return index;
+    }
+    
     public void checkPlayer(Entity entity) {
     	//Get entity's solid area position
 		

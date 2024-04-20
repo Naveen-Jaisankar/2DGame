@@ -149,6 +149,9 @@ public class KeyHandler implements KeyListener{
 				gp.gameState= gp.playState;
 				
 			}
+			if(code == KeyEvent.VK_ESCAPE) {
+				gp.gameState = gp.playState;
+			}
 			
 
 		}
