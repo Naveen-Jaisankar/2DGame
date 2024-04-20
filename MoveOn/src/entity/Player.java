@@ -1,5 +1,7 @@
 package entity;
 
+import java.awt.AlphaComposite;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -31,7 +33,7 @@ public class Player extends Entity{
 	
 	public void setDefaultValues() {
 		worldX = gp.tileSize*23;
-		worldY = gp.tileSize*21;;
+		worldY = gp.tileSize*21;
 		speed =4;
 		direction = "down";
 		
@@ -79,6 +81,9 @@ public class Player extends Entity{
 			interactNPC(npcIndex);
 			gp.eHandler.checkEvent();
 			gp.keyHandler.enterPressed = false;
+			// Check monster collision
+			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			contactMonster(monsterIndex);
 			
 			//If collision is false, player can move
 			if (collisionOn == false){
@@ -100,6 +105,14 @@ public class Player extends Entity{
 				spriteCounter = 0;
 			}
 		}
+		// outside key if statement
+		if(invincible == true){
+			invincibleCounter++;
+			if(invincibleCounter>120){
+				invincible = false;
+				invincibleCounter=0;
+			}
+		}
 		
 	}
 	public void interactNPC(int index) {
@@ -110,6 +123,16 @@ public class Player extends Entity{
 			}
 			
 		}
+	}
+	public void contactMonster(int index){
+	if(index!=999){
+		if(invincible == false){
+			life -=1;
+			invincible = true;
+
+		}
+		
+	}
 	}
 	
 	public void pickUpObject(int index) {
@@ -190,6 +213,17 @@ public class Player extends Entity{
 			}
 			break;
 		}
+		if(invincible){
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+			
+		}
 		g2.drawImage(image, screenX, screenY, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+		// debug
+		// g2.setFont(new Font("Arial",Font.PLAIN,26));
+		// g2.setColor(Color.white);
+		// g2.drawString("Invincible:"+invincibleCounter, 10, 400);
+		;
 	}
 }
