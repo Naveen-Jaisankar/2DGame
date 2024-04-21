@@ -1,5 +1,7 @@
 package entity;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -12,45 +14,84 @@ import main.UtilityTool;
 public class Entity {
 	
 	GamePanel gp;
-	
-	public int worldX,worldY;
-	
-	public int speed;
 	public BufferedImage up1,  up2, down1, down2, left1,left2, right1, right2;
-	public String direction = "down";
-	public int spriteCounter = 0;
-	public int spriteNum = 1;
-	public Rectangle solidArea = new Rectangle(0,0,48,48);
-	public int solidAreaDefaultX, solidAreaDefaultY;
-	public boolean collisionOn = false;
-	public int actionLockCounter = 0;
-	String dialogues[] = new String[20];
-	int dialogueIndex = 0;
+	public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
 	public BufferedImage image,image2,image3;
-    public String name;
-    public boolean collision = false;
-	
-	//CHARACTER STATUS
+	public Rectangle solidArea = new Rectangle(0,0,48,48);
+	public Rectangle attackArea = new Rectangle(0,0,0,0);
+	public int solidAreaDefaultX, solidAreaDefaultY;
+	public boolean collision = false;
+	String dialogues[] = new String[20];
+
+	// state
+	public int worldX,worldY;
+	public String direction = "down";
+	public int spriteNum = 1;
+	int dialogueIndex = 0;
+	public boolean collisionOn = false;
+	public boolean invincible =false;
+	public boolean attacking = false;
+	public boolean alive =true;
+	public boolean dying = false;
+	public boolean hpBarOn = false;
+
+	// counter
+	public int spriteCounter = 0;
+	public int actionLockCounter = 0;
+	public int invincibleCounter = 0;
+	public int dyingCounter =0;
+	public int hpBarCounter=0;
+	public int changeDirection1 = 0;
+    public int changeDirection2 = 0;
+    public int changeDirection3 = 0;
+    public int changeDirection4 = 0;
+
+	// character attributes
+	public int speed;
+    public String name;  
+	public int type; 
+	//  0- player, 1 - npc, 2-monster
 	public int maxLife;
 	public int life;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
 	}
+	public void dyingAnimation(Graphics2D g2){
+		dyingCounter++;
+		int i=5;
+		if(dyingCounter<=i){changeAlpha(g2,0f);}
+		if(dyingCounter>i && dyingCounter <=i*2){changeAlpha(g2,1f);}
+		if(dyingCounter>i*2 && dyingCounter <=i*3){changeAlpha(g2,0f);}
+		if(dyingCounter>i*3 && dyingCounter <=i*4){changeAlpha(g2,1f);}
+		if(dyingCounter>i*4 && dyingCounter <=i*5){changeAlpha(g2,0f);}
+		if(dyingCounter>i*5 && dyingCounter <=i*6){changeAlpha(g2,1f);}
+		if(dyingCounter>i*6 && dyingCounter <=i*7){changeAlpha(g2,0f);}
+		if(dyingCounter>i*7 && dyingCounter <=i*8){changeAlpha(g2,1f);}
+		if(dyingCounter>i*8){
+			dying = false;
+			alive = false;
+		}
+
+	}
+	public void changeAlpha(Graphics2D g2, float alphaValue){
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alphaValue));
+	}
 	
-	public BufferedImage setup(String imagePath) {
+	public BufferedImage setup(String imagePath,int width, int height) {
 		UtilityTool uTool = new UtilityTool();
 		BufferedImage scaledImage = null;
 		
 		try {
 			scaledImage = ImageIO.read(getClass().getResourceAsStream(imagePath+".png"));
-			scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
+			scaledImage = uTool.scaleImage(scaledImage, width, height);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return scaledImage;
 	}
 	public void setAction() {}
+	public void damageReaction(){}
 	public void speak(){
 		if(dialogues[dialogueIndex]==null){
 			dialogueIndex =0;
@@ -79,7 +120,16 @@ public class Entity {
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
 		gp.cChecker.checkObject(this, false);
-		gp.cChecker.checkPlayer(this);
+		gp.cChecker.checkEntity(this, gp.npc);
+		gp.cChecker.checkEntity(this, gp.monster);
+		boolean contactPlayer = gp.cChecker.checkPlayer(this);
+		if(this.type == 2 && contactPlayer == true){
+			if(gp.player.invincible == false){
+				gp.playSoundEffect(6);
+				gp.player.life-=1;
+				gp.player.invincible = true;
+			}
+		}
 		//If collision is false, player can move
 		if (collisionOn == false){
 			switch (direction) {
@@ -98,6 +148,14 @@ public class Entity {
 				spriteNum=1;
 			}
 			spriteCounter = 0;
+		}
+
+		if(invincible == true){
+			invincibleCounter++;
+			if(invincibleCounter>40){
+				invincible = false;
+				invincibleCounter=0;
+			}
 		}
 	}    
 	public void draw(Graphics2D g2) {
@@ -139,7 +197,31 @@ public class Entity {
     			}
     			break;
     		}
+
+			// monster health bar
+			if(type==2 && hpBarOn == true){
+				double oneScale = (double)gp.tileSize/maxLife;
+				double hpBarValue = oneScale*life;
+				g2.setColor(new Color(35,35,35));
+				g2.fillRect(screenX-1, screenY-16, gp.tileSize+2, 12);
+				g2.setColor(new Color(255,0,30));
+				g2.fillRect(screenX, screenY-16, (int)hpBarValue, 12);
+				hpBarCounter++;
+				if(hpBarCounter>600){
+					hpBarCounter=0;
+					hpBarOn=false;
+				}
+			}
+
+			if(invincible){
+				hpBarOn = true;
+				hpBarCounter=0;
+				changeAlpha(g2, 0.4f);
+				
+			}
+			if(dying == true){ dyingAnimation(g2);}
             g2.drawImage(image, screenX, screenY, gp.tileSize,gp.tileSize,null);
+			changeAlpha(g2, 1f);
 
         }
 		

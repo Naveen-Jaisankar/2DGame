@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Sound soundEffects = new Sound();
 	public UI ui = new UI(this);
 	public EventHandler eHandler = new EventHandler(this);
-	ArrayList<Entity> entityList = new ArrayList<>();
+	
 	
 	
 	
@@ -47,6 +47,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this,keyHandler);
 	public Entity[] obj = new Entity[10];
 	public Entity npc[] = new Entity[10];
+	public Entity monster[] = new Entity[20];
+	ArrayList<Entity> entityList = new ArrayList<>();
 	
 	static final int FPS = 60;
 	
@@ -72,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		aSetter.setObject();
 		aSetter.setNPC();
+		aSetter.setMonster();
 //		playMusic(0);
 //		stopMusic();
 		gameState = titleState;
@@ -108,7 +111,7 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 			if(timer >= 1000000000) {
-				System.out.println("FPS:" + drawCount);
+				// System.out.println("FPS:" + drawCount);
 				drawCount = 0;
 				timer = 0;
 			}
@@ -129,6 +132,15 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 		}
+		// monster
+		for(int i=0;i<monster.length;i++) {
+			if(monster[i]!= null) {
+				if(monster[i].alive == true && monster[i].dying ==false){monster[i].update();}
+				if(monster[i].alive == false){ monster[i]= null;}
+				
+			}
+		}
+	
 		if(gameState == pauseState) {
 			
 			
@@ -166,6 +178,11 @@ public class GamePanel extends JPanel implements Runnable{
 				entityList.add(obj[i]);
 			}
 		}
+		for(int i=0; i<monster.length;i++){
+			if(monster[i]!=null){
+				entityList.add(monster[i]);
+			}
+		}
 		// Sort entities based on worldY
 		Collections.sort(entityList, new Comparator<Entity>() {
 
@@ -184,9 +201,7 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 
 		// once drawn empty the entitylist
-		for(int i=0;i<entityList.size();i++){
-			entityList.remove(i);
-		}
+		entityList.clear();
 		// UI
 		ui.draw(g2);
 		}
