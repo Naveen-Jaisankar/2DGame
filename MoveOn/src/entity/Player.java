@@ -201,7 +201,7 @@ public class Player extends Entity{
 	}
 	public void contactMonster(int index){
 	if(index!=999){
-		if(invincible == false){
+		if(invincible == false && gp.monster[index].alive == true && gp.monster[index].dying == false){
 			life -=1;
 			invincible = true;
 
@@ -217,7 +217,7 @@ public class Player extends Entity{
 				gp.monster[index].invincible = true;
 
 				if(gp.monster[index].life<=0){
-					gp.monster[index] = null;
+					gp.monster[index].dying = true;
 				}
 			}
 		}
