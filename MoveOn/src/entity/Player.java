@@ -192,6 +192,7 @@ public class Player extends Entity{
 
 			}
 			else{
+				gp.playSoundEffect(7);
 				attacking = true;
 				
 			}
@@ -202,6 +203,7 @@ public class Player extends Entity{
 	public void contactMonster(int index){
 	if(index!=999){
 		if(invincible == false && gp.monster[index].alive == true && gp.monster[index].dying == false){
+			gp.playSoundEffect(6);
 			life -=1;
 			invincible = true;
 
@@ -213,8 +215,10 @@ public class Player extends Entity{
 	public void damageMonster(int index){
 		if(index!=999){
 			if(gp.monster[index].invincible == false){
+				gp.playSoundEffect(5);
 				gp.monster[index].life -=1;
 				gp.monster[index].invincible = true;
+				gp.monster[index].damageReaction();
 
 				if(gp.monster[index].life<=0){
 					gp.monster[index].dying = true;
