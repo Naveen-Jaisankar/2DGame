@@ -2,11 +2,11 @@ package entity;
 
 import main.GamePanel;
 
-public class Bus extends NonPlayableEntity{
+public class Vehicle extends NonPlayableEntity{
 	
 	public static final int SPEED = 1;
 	
-	public Bus(GamePanel gp,String imageName,String direction,int destinationX,int destinationY,int currentX, int currentY) {
+	public Vehicle(GamePanel gp,String imageName,String direction,int destinationX,int destinationY,int currentX, int currentY) {
 		super(gp,direction,SPEED,currentX,currentY);
 		setDefaultValues(imageName,direction,destinationX,destinationY);
 		loadImages();
@@ -45,20 +45,23 @@ public class Bus extends NonPlayableEntity{
 	public void update() {
 		int npcIndex = gp.cChecker.checkEntity(gp.player, this);
 		if(npcIndex!=999 & (gp.keyHandler.fPressed || isInteracted)) {
-			if(gp.keyHandler.fPressed) {
-				gp.keyHandler.fPressed=Boolean.FALSE;
-				isInteracted = Boolean.TRUE;
-				gp.isPlayerInContactWithVehicle = Boolean.TRUE;
-				System.out.println("Bus" + gp.isPlayerInContactWithVehicle);
-			}
-			if(worldY<=destination_y*gp.tileSize) {
-				worldY += speed;
-				gp.player.worldY += speed;
-			}else if(worldY >= destination_y*gp.tileSize) {
-				System.out.println("going to turn of interaction");
-				isInteracted = Boolean.FALSE;
-				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
-			}
+			
+			setActions(this.direction);
+//			if(gp.keyHandler.fPressed) {
+//				gp.keyHandler.fPressed=Boolean.FALSE;
+//				isInteracted = Boolean.TRUE;
+//				gp.isPlayerInContactWithVehicle = Boolean.TRUE;
+//				System.out.println("Bus" + gp.isPlayerInContactWithVehicle);
+//			}
+//			
+//			if(worldY<=destination_y*gp.tileSize) {
+//				worldY += speed;
+//				gp.player.worldY += speed;
+//			}else if(worldY >= destination_y*gp.tileSize) {
+//				System.out.println("going to turn of interaction");
+//				isInteracted = Boolean.FALSE;
+//				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
+//			}
 			
 		}
 		

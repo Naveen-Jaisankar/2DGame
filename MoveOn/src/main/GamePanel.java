@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//Movable and Immovable Objects
 	public Player player = new Player(this,keyHandler);
 	public SuperObject[] obj = new SuperObject[10];
-	public Entity npc[] = new NonPlayableEntity[10];
+	public Entity npc[] = new Entity[10];
 	
 	static final int FPS = 60;
 	
