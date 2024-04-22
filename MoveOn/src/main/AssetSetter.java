@@ -2,8 +2,8 @@ package main;
 
 import entity.NPC_OldMan;
 //import monster.MON_GreenSlime;
-import java.sql.*;
-import com.google.gson.*;
+//import java.sql.*;
+//import com.google.gson.*;
 
 
 public class AssetSetter {
