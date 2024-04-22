@@ -84,6 +84,11 @@ public class UI {
 			drawPlayerLife();
 			drawDialogueScreen();
 		}
+		//CHARACTER STATE
+		if(gp.gameState==gp.characterState) {
+			drawCharacterScreen();
+		}
+		
 	}
 	
 	public void drawPlayerLife() {
@@ -226,6 +231,55 @@ public class UI {
 		}
 		
 	}
+	
+	public void drawCharacterScreen() {
+		//Create a frame
+		final int frameX = gp.tileSize*2;
+		final int frameY = gp.tileSize;
+		final int frameWidth = gp.tileSize * 5;
+		final int frameHeight = gp.tileSize *10;
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		//TEXT
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		int textX = frameX + 20;
+		int textY = frameY + gp.tileSize;
+		final int lineHeight = 35; //Same as font size 32F
+		
+		g2.drawString("Level", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Life",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Strength",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Dexterity",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Attack",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Defense",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Exp",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Next Level",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Coin",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Weapon",textX,textY);
+		textY += lineHeight;
+		g2.drawString("Shield",textX,textY);
+		textY += lineHeight;
+		
+		//VALUES
+		int taliX = (frameX + frameWidth) - 30;
+		textY = frameY + gp.tileSize;
+		
+		String value;
+		value = String.valueOf(gp.player.level);
+		
+	}
+	
 	public void drawSubWindow(int x,int y,int width,int height){
 		Color c = new Color(0,0,0,210);
 		g2.setColor(c);
@@ -250,6 +304,13 @@ public class UI {
 	public int getXForCenteredText(String text) {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 		return (gp.screenWidth/2 - length/2);
+	
+	}
+	
+	public int getXForAlignToRightText(String text,int tailX) {
+		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		int x = tailX - length;
+		return x;
 	
 	}
 }
