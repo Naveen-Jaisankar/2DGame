@@ -1,10 +1,8 @@
-package monster;
+package entity;
 
 import main.GamePanel;
 
 import java.util.Random;
-
-import entity.Entity;
 
 public class MON_GreenSlime extends Entity {
     GamePanel gp;
