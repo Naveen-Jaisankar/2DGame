@@ -45,12 +45,15 @@ public class Entity {
     public int changeDirection2 = 0;
     public int changeDirection3 = 0;
     public int changeDirection4 = 0;
+	public int shotAvailableCounter = 0;
 
 	// character attributes
 	public int speed;
     public String name;  
 	public int maxLife;
 	public int life;
+	public int maxMana;
+	public int mana;
 	public int level;
 	public int strength;
 	public int dexterity;
@@ -61,11 +64,13 @@ public class Entity {
 	public int coin;
 	public Entity currentWeapon;
 	public Entity currentShield;
+	public Projectile projectile;
 
 	//  Item attributes
 	public int attackValue;
 	public int defenseValue;
 	public String description = "";
+	public int useCost;
 
 	// Item
 	public int type; 
