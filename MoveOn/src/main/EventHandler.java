@@ -94,8 +94,9 @@ public class EventHandler {
 		if(gp.keyHandler.enterPressed) {
 			gp.gameState = gameState;
 			gp.player.attackCancelled = Boolean.TRUE;
-			gp.ui.currentDialogue = "You are Healed";
+			gp.ui.currentDialogue = "You are Healed.\nYour life and mana has been recovered";
 			gp.player.life = gp.player.maxLife;
+			gp.player.mana = gp.player.maxMana;
 			gp.aSetter.setMonster();
 		}
 		

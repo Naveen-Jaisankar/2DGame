@@ -11,6 +11,7 @@ import main.GamePanel;
 import main.KeyHandler;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
+import object.OBJ_Rock;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
 
@@ -55,6 +56,9 @@ public class Player extends Entity{
 		level =1;
 		maxLife = 6;
 		life = maxLife;
+		maxMana = 4;
+		mana = maxMana;
+		ammo = 10;
 		strength = 1;//strength >>>, damage >>>
 		dexterity =1;// dexterity >>>, damage <<<
 		exp =0;
@@ -63,6 +67,7 @@ public class Player extends Entity{
 		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
 		projectile = new OBJ_Fireball(gp);
+		// projectile = new OBJ_Rock(gp);
 		attack = getAttack();
 		defense = getDefense();
 	}
@@ -187,9 +192,12 @@ public class Player extends Entity{
 				spriteCounter = 0;
 			}
 		}
-		if(gp.keyHandler.shotKeyPressed && projectile.alive == false && shotAvailableCounter == 30){
+		if(gp.keyHandler.shotKeyPressed && projectile.alive == false && shotAvailableCounter == 30
+		&& projectile.haveResource(this)==true){
 			// player co=ord, direction and user
 			projectile.set(worldX,worldY,direction,true,this);
+			// UPDATE MANA
+			projectile.subtractResource(this);
 			gp.projectileList.add(projectile);
 			shotAvailableCounter = 0;
 			gp.playSoundEffect(10);
