@@ -45,12 +45,16 @@ public class Entity {
     public int changeDirection2 = 0;
     public int changeDirection3 = 0;
     public int changeDirection4 = 0;
+	public int shotAvailableCounter = 0;
 
 	// character attributes
 	public int speed;
     public String name;  
 	public int maxLife;
 	public int life;
+	public int maxMana;
+	public int mana;
+	public int ammo;
 	public int level;
 	public int strength;
 	public int dexterity;
@@ -61,11 +65,13 @@ public class Entity {
 	public int coin;
 	public Entity currentWeapon;
 	public Entity currentShield;
+	public Projectile projectile;
 
 	//  Item attributes
 	public int attackValue;
 	public int defenseValue;
 	public String description = "";
+	public int useCost;
 
 	// Item
 	public int type; 
@@ -147,18 +153,7 @@ public class Entity {
 		gp.cChecker.checkEntity(this, gp.monster);
 		boolean contactPlayer = gp.cChecker.checkPlayer(this);
 		if(this.type == type_monster && contactPlayer == true){
-			if(gp.player.invincible == false){
-				gp.playSoundEffect(6);
-				
-				int damage = attack - gp.player.defense;
-				
-				if(damage<0) {
-					damage =0;
-				}
-				
-				gp.player.life-=damage;
-				gp.player.invincible = true;
-			}
+			damagePlayer(attack);
 		}
 		//If collision is false, player can move
 		if (collisionOn == false){
@@ -187,7 +182,26 @@ public class Entity {
 				invincibleCounter=0;
 			}
 		}
+		if(shotAvailableCounter<30){
+			shotAvailableCounter++;
+		}
 	}    
+
+	public void damagePlayer(int attack){
+		if(gp.player.invincible == false){
+			gp.playSoundEffect(6);
+			
+			int damage = attack - gp.player.defense;
+			
+			if(damage<0) {
+				damage =0;
+			}
+			
+			gp.player.life-=damage;
+			gp.player.invincible = true;
+		}
+	}
+
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;

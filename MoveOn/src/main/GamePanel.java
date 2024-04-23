@@ -50,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity npc[] = new Entity[10];
 	public Entity monster[] = new Entity[20];
 	ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> projectileList = new ArrayList<>();
 	
 	static final int FPS = 60;
 	
@@ -142,6 +143,14 @@ public class GamePanel extends JPanel implements Runnable{
 				
 			}
 		}
+		// projectile
+		for(int i=0;i<projectileList.size();i++) {
+			if(projectileList.get(i)!= null) {
+				if(projectileList.get(i).alive == true ){projectileList.get(i).update();}
+				if(projectileList.get(i).alive == false){ projectileList.remove(i);}
+				
+			}
+		}
 	
 		if(gameState == pauseState) {
 			
@@ -170,19 +179,28 @@ public class GamePanel extends JPanel implements Runnable{
 		tileM.draw(g2);
 		// add all entities(player,npc,object) to the arraylist
 		entityList.add(player);
+		// npc
 		for(int i=0; i<npc.length;i++){
 			if(npc[i]!=null){
 				entityList.add(npc[i]);
 			}
 		}
+		// obj
 		for(int i=0; i<obj.length;i++){
 			if(obj[i]!=null){
 				entityList.add(obj[i]);
 			}
 		}
+		// monster
 		for(int i=0; i<monster.length;i++){
 			if(monster[i]!=null){
 				entityList.add(monster[i]);
+			}
+		}
+		// projectile
+		for(int i=0; i<projectileList.size();i++){
+			if(projectileList.get(i)!=null){
+				entityList.add(projectileList.get(i));
 			}
 		}
 		// Sort entities based on worldY

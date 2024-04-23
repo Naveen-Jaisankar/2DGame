@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 	
-	public boolean upPressed, downPressed, leftPressed, rightPressed,enterPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed,enterPressed, shotKeyPressed;
 	//Debug
 	boolean showDebugText = Boolean.FALSE;
 	
@@ -120,44 +120,48 @@ public class KeyHandler implements KeyListener{
 		
 		if(code == KeyEvent.VK_W 
 			|| code == KeyEvent.VK_UP) {
-		upPressed = Boolean.TRUE;
-	}
-	if(code == KeyEvent.VK_S
-			|| code == KeyEvent.VK_DOWN) {
-		downPressed = Boolean.TRUE;		
-	}
-	if(code == KeyEvent.VK_A
-			|| code == KeyEvent.VK_LEFT) {
-		leftPressed = Boolean.TRUE;
-	}
-	if(code == KeyEvent.VK_D
-			|| code == KeyEvent.VK_RIGHT) {
-		rightPressed = Boolean.TRUE;
-	}
-	if(code == KeyEvent.VK_P) {
-		gp.gameState= gp.pauseState;
-		
-	}
-	if(code == KeyEvent.VK_ENTER) {
-		enterPressed = true;
-		
-	}
-	if(code == KeyEvent.VK_C) {
-		gp.gameState = gp.characterState;
-	}
-	
-	if(code == KeyEvent.VK_T) {
-		if(!showDebugText) {
-			showDebugText = Boolean.TRUE;
-		}else {
-			showDebugText = Boolean.FALSE;
+			upPressed = Boolean.TRUE;
 		}
-	}
-	
-	if(code == KeyEvent.VK_R) {
-		gp.tileM.loadMap("/maps/worldV2.txt");
-	}
-	
+		if(code == KeyEvent.VK_S
+				|| code == KeyEvent.VK_DOWN) {
+			downPressed = Boolean.TRUE;		
+		}
+		if(code == KeyEvent.VK_A
+				|| code == KeyEvent.VK_LEFT) {
+			leftPressed = Boolean.TRUE;
+		}
+		if(code == KeyEvent.VK_D
+				|| code == KeyEvent.VK_RIGHT) {
+			rightPressed = Boolean.TRUE;
+		}
+		if(code == KeyEvent.VK_P) {
+			gp.gameState= gp.pauseState;
+			
+		}
+		if(code == KeyEvent.VK_F) {
+			shotKeyPressed = true;
+			
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+			
+		}
+		if(code == KeyEvent.VK_C) {
+			gp.gameState = gp.characterState;
+		}
+		
+		if(code == KeyEvent.VK_T) {
+			if(!showDebugText) {
+				showDebugText = Boolean.TRUE;
+			}else {
+				showDebugText = Boolean.FALSE;
+			}
+		}
+		
+		if(code == KeyEvent.VK_R) {
+			gp.tileM.loadMap("/maps/worldV2.txt");
+		}
+		
 	}
 	
 	public void pauseState(int code) {
@@ -237,6 +241,10 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_D
 				|| code == KeyEvent.VK_RIGHT) {
 			rightPressed = Boolean.FALSE;
+		}
+		if(code == KeyEvent.VK_F) {
+			shotKeyPressed = Boolean.FALSE;
+			
 		}
 		
 	}
