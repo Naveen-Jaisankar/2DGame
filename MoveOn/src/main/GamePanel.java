@@ -51,7 +51,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity npc[] = new Entity[10];
 	public Entity monster[] = new Entity[20];
 	public InteractiveTile iTile [] = new InteractiveTile[50];
-	ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> particleList = new ArrayList<>();
 	public ArrayList<Entity> projectileList = new ArrayList<>();
 	
 	static final int FPS = 60;
@@ -158,6 +159,15 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 		
+		//Particle
+		for(int i=0;i<particleList.size();i++) {
+			if(particleList.get(i)!= null) {
+				if(particleList.get(i).alive == true ){particleList.get(i).update();}
+				if(particleList.get(i).alive == false){ particleList.remove(i);}
+				
+			}
+		}
+		
 		for(int i =0;i<iTile.length;i++) {
 			if(iTile[i]!=null) {
 				iTile[i].update();
@@ -222,6 +232,14 @@ public class GamePanel extends JPanel implements Runnable{
 				entityList.add(projectileList.get(i));
 			}
 		}
+		
+		//Particle
+		for(int i=0; i<particleList.size();i++){
+			if(particleList.get(i)!=null){
+				entityList.add(particleList.get(i));
+			}
+		}
+		
 		// Sort entities based on worldY
 		Collections.sort(entityList, new Comparator<Entity>() {
 
