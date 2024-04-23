@@ -1,22 +1,24 @@
 package main;
 
-<<<<<<< HEAD
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import entity.Vehicle;
-=======
-import entity.NPC_OldMan;
-//import monster.MON_GreenSlime;
-//import java.sql.*;
-//import com.google.gson.*;
+import model.VehicleModel;
 
->>>>>>> refs/remotes/origin/dev
 
 public class AssetSetter {
     GamePanel gp;
+    List<VehicleModel> vehicles;
     
-    private static final String ASSETS_FILE_PATH = "assets.json";
+    private static final String ASSETS_FILE_PATH = "D:/Eclipse Workspace/2DGame/MoveOn/res/Assets/assets.json";
     
     public AssetSetter(GamePanel gp){
         this.gp =gp;
@@ -24,42 +26,29 @@ public class AssetSetter {
     }
 
     public void setObject(){
-<<<<<<< HEAD
-=======
-    	
->>>>>>> refs/remotes/origin/dev
         
     }
     
     public void loadAssets() {
-    	
-    }
-    
-    
+    	Gson gson = new Gson();
+    	try (FileReader reader = new FileReader(ASSETS_FILE_PATH)) {
+            Type listType = new TypeToken<List<VehicleModel>>(){}.getType();
+            vehicles = gson.fromJson(reader, listType);
+            for (VehicleModel vehicle : vehicles) {
+                System.out.println(vehicle);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } 
     
     public void setNPC() {
-<<<<<<< HEAD
-    	gp.npc[0] = new Vehicle(gp, "car","down", 23, 42,23,25);
-    	gp.npc[1] = new Vehicle(gp, "merchant_down_1","up", 23, 12,23,18);
-    	gp.npc[2] = new Vehicle(gp, "oldman_left_1","left", 12, 21,18,21);
-    	gp.npc[3] = new Vehicle(gp, "bike","right", 38, 21,27,21);
-=======
-    	gp.npc[0] = new NPC_OldMan(gp);
-    	gp.npc[0].worldX = gp.tileSize*21;
-    	gp.npc[0].worldY = gp.tileSize*21;
-
-    }
-    public void setMonster(){
-//        gp.monster[0] = new MON_GreenSlime(gp);
-//        gp.monster[0].worldX = gp.tileSize*23;
-//        gp.monster[0].worldY = gp.tileSize*36;
-//
-//        gp.monster[1] = new MON_GreenSlime(gp);
-//        gp.monster[1].worldX = gp.tileSize*23;
-//        gp.monster[1].worldY = gp.tileSize*37;
-
-
->>>>>>> refs/remotes/origin/dev
+    	
+    	int i = 0;
+    	for (VehicleModel vehicle : vehicles) {
+    		gp.npc[i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getDestinationX(),vehicle.getDestinationY(),vehicle.getCurrentX(),vehicle.getCurrentY());
+    		i++;
+    	}
     }
 
 }

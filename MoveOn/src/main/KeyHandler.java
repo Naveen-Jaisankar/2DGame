@@ -90,11 +90,7 @@ public class KeyHandler implements KeyListener{
 
 		}
 		// play state
-<<<<<<< HEAD
 		if(gp.gameState == gp.playState && !gp.isPlayerInContactWithVehicle){
-=======
-		else if(gp.gameState == gp.playState){
->>>>>>> refs/remotes/origin/dev
 			
 			if(code == KeyEvent.VK_W 
 				|| code == KeyEvent.VK_UP) {
