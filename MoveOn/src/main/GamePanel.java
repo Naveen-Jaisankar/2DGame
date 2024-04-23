@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Sound soundEffects = new Sound();
 	public UI ui = new UI(this);
 	public EventHandler eHandler = new EventHandler(this);
+	Config config = new Config(this);
 	
 	
 	

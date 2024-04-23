@@ -595,6 +595,8 @@ public class UI {
 		volumeWidth = 24*gp.soundEffects.volumeScale;
 		g2.fillRect(textX, textY, volumeWidth, 24);
 
+		gp.config.saveConfig();
+
 
 
 	}
