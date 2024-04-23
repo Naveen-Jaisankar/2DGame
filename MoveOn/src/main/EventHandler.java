@@ -93,8 +93,10 @@ public class EventHandler {
 	public void healingPool(int col, int row,int gameState) {
 		if(gp.keyHandler.enterPressed) {
 			gp.gameState = gameState;
+			gp.player.attackCancelled = Boolean.TRUE;
 			gp.ui.currentDialogue = "You are Healed";
 			gp.player.life = gp.player.maxLife;
+			gp.aSetter.setMonster();
 		}
 		
 	}
