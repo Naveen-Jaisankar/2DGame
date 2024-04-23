@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -43,6 +44,10 @@ public class KeyHandler implements KeyListener{
 		//CHARACTER STATE
 		else if(gp.gameState == gp.characterState) {
 			characterState(code);
+		}
+		// Options state
+		else if(gp.gameState == gp.optionsState) {
+			optionsState(code);
 		}
 			
 	}
@@ -94,17 +99,17 @@ public class KeyHandler implements KeyListener{
 			if(gp.ui.commandNum==0){
 				System.err.println("fighter stuff!");
 				gp.gameState = gp.playState;
-//				gp.playMusic(0);
+				gp.playMusic(0);
 			}	
 			if(gp.ui.commandNum==1){
 				System.err.println("thief stuff!");
 				gp.gameState = gp.playState;
-//				gp.playMusic(0);
+				gp.playMusic(0);
 			}	
 			if(gp.ui.commandNum==2){
 				System.err.println("sorcerer stuff!");
 				gp.gameState = gp.playState;
-//				gp.playMusic(0);
+				gp.playMusic(0);
 			}	
 			if(gp.ui.commandNum==3){
 				gp.ui.titleScreenState = 0;
@@ -136,6 +141,10 @@ public class KeyHandler implements KeyListener{
 		}
 		if(code == KeyEvent.VK_P) {
 			gp.gameState= gp.pauseState;
+			
+		}
+		if(code == KeyEvent.VK_ESCAPE) {
+			gp.gameState= gp.optionsState;
 			
 		}
 		if(code == KeyEvent.VK_F) {
@@ -222,6 +231,71 @@ public class KeyHandler implements KeyListener{
 
 	}
 
+	public void optionsState(int code){
+		if(code == KeyEvent.VK_ESCAPE){
+			gp.gameState = gp.playState;
+		}
+		if(code == KeyEvent.VK_ENTER){
+			enterPressed = true;
+		}
+		int maxCommandNum = 0;
+		switch (gp.ui.subState) {
+			case 0:
+				maxCommandNum = 5;
+				
+				break;
+			case 3:
+				maxCommandNum = 1;
+				
+				break;
+		
+			default:
+				break;
+		}
+
+		if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
+			gp.ui.commandNum-- ;
+			gp.playSoundEffect(9);
+			if(gp.ui.commandNum <0){
+				gp.ui.commandNum = maxCommandNum;
+			}
+		}
+		if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
+			gp.ui.commandNum++ ;
+			gp.playSoundEffect(9);
+			if(gp.ui.commandNum>maxCommandNum){
+				gp.ui.commandNum = 0;
+			}
+		}
+		if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
+			if(gp.ui.subState == 0){
+				if(gp.ui.commandNum ==1 && gp.music.volumeScale>0){
+					gp.music.volumeScale--;
+					gp.music.checVolume();
+					gp.playSoundEffect(9);
+				}
+				if(gp.ui.commandNum ==2 && gp.soundEffects.volumeScale>0){
+					gp.soundEffects.volumeScale--;
+					gp.playSoundEffect(9);
+				}
+			}
+			
+		}
+		if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
+			if(gp.ui.subState == 0){
+				if(gp.ui.commandNum ==1 && gp.music.volumeScale<5){
+					gp.music.volumeScale++;
+					gp.music.checVolume();
+					gp.playSoundEffect(9);
+				}
+				if(gp.ui.commandNum ==2 && gp.soundEffects.volumeScale<5){
+					gp.soundEffects.volumeScale++;
+					gp.playSoundEffect(9);
+				}
+			}
+			
+		}
+	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		

@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public final int maxWorldCol = 50;
 	public final int maxWorldRow = 50;
+	public boolean fullScreenOn = false;
 	
 	//Game assets
 	TileManager tileM = new TileManager(this);
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int pauseState =2;
 	public final int dialougeState =3;
 	public final int characterState = 4;
+	public final int optionsState = 5;
 	
 	
 	public GamePanel() {
