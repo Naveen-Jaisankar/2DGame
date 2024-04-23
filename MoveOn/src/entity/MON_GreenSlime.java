@@ -1,5 +1,4 @@
-package monster;
-
+package entity;
 import main.GamePanel;
 
 import java.util.Random;
@@ -18,7 +17,10 @@ public class MON_GreenSlime extends Entity {
         maxLife =4;
         life = maxLife;
         type = 2;
-
+        attack = 5;
+        defense = 0;
+        exp = 2;
+        
         solidArea.x = 3;
         solidArea.y = 10;
         solidArea.width = 42;

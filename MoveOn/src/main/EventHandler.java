@@ -96,6 +96,7 @@ public class EventHandler {
 			gp.player.attackCancelled = Boolean.TRUE;
 			gp.ui.currentDialogue = "You are Healed";
 			gp.player.life = gp.player.maxLife;
+			gp.aSetter.setMonster();
 		}
 		
 	}
