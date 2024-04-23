@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.NonPlayableEntity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -41,10 +43,13 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	
 	
+	
 	//Movable and Immovable Objects
 	public Player player = new Player(this,keyHandler);
-	public SuperObject[] obj = new SuperObject[10];
+	public Entity[] obj = new Entity[10];
 	public Entity npc[] = new Entity[10];
+	public Entity monster[] = new Entity[20];
+	ArrayList<Entity> entityList = new ArrayList<>();
 	
 	static final int FPS = 60;
 	
@@ -74,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		aSetter.setObject();
 		aSetter.setNPC();
+		aSetter.setMonster();
 //		playMusic(0);
 //		stopMusic();
 		gameState = titleState;
@@ -110,7 +116,11 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 			if(timer >= 1000000000) {
+<<<<<<< HEAD
 //				System.out.println("FPS:" + drawCount);
+=======
+				// System.out.println("FPS:" + drawCount);
+>>>>>>> refs/remotes/origin/dev
 				drawCount = 0;
 				timer = 0;
 			}
@@ -131,6 +141,15 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 		}
+		// monster
+		for(int i=0;i<monster.length;i++) {
+			if(monster[i]!= null) {
+				if(monster[i].alive == true && monster[i].dying ==false){monster[i].update();}
+				if(monster[i].alive == false){ monster[i]= null;}
+				
+			}
+		}
+	
 		if(gameState == pauseState) {
 			
 			
@@ -156,24 +175,49 @@ public class GamePanel extends JPanel implements Runnable{
 
 			//Tile
 		tileM.draw(g2);
-		
-		//Object
-		for(int i=0; i<obj.length;i++){
-			if(obj[i]!=null){
-				obj[i].draw(g2,this);
-			}
-		}
-
-		//NPC
+		// add all entities(player,npc,object) to the arraylist
+		entityList.add(player);
 		for(int i=0; i<npc.length;i++){
 			if(npc[i]!=null){
-				npc[i].draw(g2);
+				entityList.add(npc[i]);
 			}
 		}
+<<<<<<< HEAD
 		//Player
 		if(!isPlayerInContactWithVehicle) {
 			player.draw(g2);
 		}
+=======
+		for(int i=0; i<obj.length;i++){
+			if(obj[i]!=null){
+				entityList.add(obj[i]);
+			}
+		}
+		for(int i=0; i<monster.length;i++){
+			if(monster[i]!=null){
+				entityList.add(monster[i]);
+			}
+		}
+		// Sort entities based on worldY
+		Collections.sort(entityList, new Comparator<Entity>() {
+
+			@Override
+			public int compare(Entity e1, Entity e2) {
+				int result = Integer.compare(e1.worldY, e2.worldY);
+				return result;
+			}
+			
+		});
+
+		// draw
+
+		for(int i=0;i<entityList.size();i++){
+			entityList.get(i).draw(g2);
+		}
+
+		// once drawn empty the entitylist
+		entityList.clear();
+>>>>>>> refs/remotes/origin/dev
 		// UI
 		ui.draw(g2);
 		}
