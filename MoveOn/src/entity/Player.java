@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Axe;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Rock;
@@ -64,7 +65,8 @@ public class Player extends Entity{
 		exp =0;
 		nextLevelExp = 5;
 		coin = 0;
-		currentWeapon = new OBJ_Sword_Normal(gp);
+//		currentWeapon = new OBJ_Sword_Normal(gp);
+		currentWeapon = new OBJ_Axe(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
 		projectile = new OBJ_Fireball(gp);
 		// projectile = new OBJ_Rock(gp);
@@ -159,6 +161,8 @@ public class Player extends Entity{
 			// Check monster collision
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 			contactMonster(monsterIndex);
+			
+			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 
 			gp.eHandler.checkEvent();
 			
@@ -215,6 +219,13 @@ public class Player extends Entity{
 			shotAvailableCounter++;
 		}
 		
+		if(life > maxLife) {
+			life = maxLife;
+		}
+		if(mana > maxMana) {
+			mana = maxMana;
+		}
+		
 	}
 
 	public void attacking(){
@@ -248,6 +259,9 @@ public class Player extends Entity{
 			// check monster collision with updated solidarea
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 			damageMonster(monsterIndex,attack);
+			
+			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+			damageInteractiveTile(iTileIndex);
 
 			// reset solidarea
 			worldX = currentWorldX;
@@ -320,6 +334,21 @@ public class Player extends Entity{
 		}
 	}
 	
+	public void damageInteractiveTile(int i) {
+		if(i!=999 && gp.iTile[i].destructible == true && gp.iTile[i].isCorrectItem(this) && gp.iTile[i].invincible == false) {
+			gp.iTile[i].playSE();
+			gp.iTile[i].life--;
+			gp.iTile[i].invincible = Boolean.TRUE;
+			
+			generateParticle(gp.iTile[i], gp.iTile[i]);
+			
+			if(gp.iTile[i].life==0) {
+				gp.iTile[i] = gp.iTile[i].getDestroyedForm();
+			}
+			
+		}
+	}
+	
 	public void checkLevelUp() {
 		if(exp >= nextLevelExp) {
 			level++;
@@ -341,16 +370,26 @@ public class Player extends Entity{
 	public void pickUpObject(int index) {
 		
 		if(index != 999) {
-			String text;
-			if(inventory.size()!=maxInventorySize){
-				inventory.add(gp.obj[index]);
-				gp.playSoundEffect(1);
-				text="Got a " + gp.obj[index].name + "!";
-			}else{
-				text="You cannot carry anymore!";
+			//PICKUP ONLY ITEMS
+			if(gp.obj[index].type == type_pickUpOnly) {
+				System.out.println("Picking : " +  gp.obj[index].name);
+				gp.obj[index].use(this);
+				gp.obj[index] = null;
 			}
-			gp.ui.addMessage(text);
-			gp.obj[index]= null;
+			//INVENTORY ITEMS
+			else {
+				String text;
+				if(inventory.size()!=maxInventorySize){
+					inventory.add(gp.obj[index]);
+					gp.playSoundEffect(1);
+					text="Got a " + gp.obj[index].name + "!";
+				}else{
+					text="You cannot carry anymore!";
+				}
+				gp.ui.addMessage(text);
+				gp.obj[index]= null;
+			}
+			
 			
 		}
 		
