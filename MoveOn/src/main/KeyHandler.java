@@ -172,7 +172,17 @@ public class KeyHandler implements KeyListener{
 		}
 		
 		if(code == KeyEvent.VK_R) {
-			gp.tileM.loadMap("/maps/worldV2.txt");
+			switch (gp.currentMap) {
+				case 0:
+					gp.tileM.loadMap("/maps/worldV3.txt",gp.currentMap);
+					break;
+				case 1:
+					gp.tileM.loadMap("/maps/interior01.txt",gp.currentMap);
+					break;
+			
+				default:
+					break;
+			}
 		}
 		
 	}

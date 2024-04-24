@@ -73,71 +73,71 @@ public class MON_GreenSlime extends Entity {
 		int Distance;
 		
 		for(int i = 0; i < gp.monster.length; i++) {
-			if(gp.monster[i] != null) {
-				xDistance = Math.abs(gp.player.worldX - gp.monster[i].worldX);
-				yDistance = Math.abs(gp.player.worldY - gp.monster[i].worldY);
+			if(gp.monster[gp.currentMap][i] != null) {
+				xDistance = Math.abs(gp.player.worldX - gp.monster[gp.currentMap][i].worldX);
+				yDistance = Math.abs(gp.player.worldY - gp.monster[gp.currentMap][i].worldY);
 				Distance = Math.max(xDistance, yDistance);
-				if(gp.monster[i].alive == true && gp.monster[i].dying ==false) {
+				if(gp.monster[gp.currentMap][i].alive == true && gp.monster[gp.currentMap][i].dying ==false) {
 					if(Distance < 4*gp.tileSize) {
-						if(gp.player.worldX > gp.monster[i].worldX && gp.player.worldY > gp.monster[i].worldY) {
+						if(gp.player.worldX > gp.monster[gp.currentMap][i].worldX && gp.player.worldY > gp.monster[gp.currentMap][i].worldY) {
 							if(changeDirection1 < 30) {
-								gp.monster[i].direction = "right";
+								gp.monster[gp.currentMap][i].direction = "right";
 							}
 							else if(changeDirection1 >=45 && changeDirection1 < 90) {
-								gp.monster[i].direction = "down";
+								gp.monster[gp.currentMap][i].direction = "down";
 							}
 							else if(changeDirection1 > 90){
 								changeDirection1 = 0;
 							}
 							changeDirection1++;
 						}
-						else if(gp.player.worldX > gp.monster[i].worldX && gp.player.worldY < gp.monster[i].worldY) {
+						else if(gp.player.worldX > gp.monster[gp.currentMap][i].worldX && gp.player.worldY < gp.monster[gp.currentMap][i].worldY) {
 							if(changeDirection2 < 45) {
-								gp.monster[i].direction = "right";
+								gp.monster[gp.currentMap][i].direction = "right";
 							}
 							else if(changeDirection2 >=45 && changeDirection2 < 90) {
-								gp.monster[i].direction = "up";
+								gp.monster[gp.currentMap][i].direction = "up";
 							}
 							else if(changeDirection2 > 90){
 								changeDirection2 = 0;
 							}
 							changeDirection2++;
 						}
-						else if(gp.player.worldX < gp.monster[i].worldX && gp.player.worldY > gp.monster[i].worldY) {
+						else if(gp.player.worldX < gp.monster[gp.currentMap][i].worldX && gp.player.worldY > gp.monster[gp.currentMap][i].worldY) {
 							if(changeDirection3 < 45) {
-								gp.monster[i].direction = "left";
+								gp.monster[gp.currentMap][i].direction = "left";
 							}
 							else if(changeDirection3 >=45 && changeDirection3 < 90) {
-								gp.monster[i].direction = "down";
+								gp.monster[gp.currentMap][i].direction = "down";
 							}
 							else if(changeDirection3 > 90){
 								changeDirection3 = 0;
 							}
 							changeDirection3++;
 						}
-						else if(gp.player.worldX < gp.monster[i].worldX && gp.player.worldY < gp.monster[i].worldY) {
+						else if(gp.player.worldX < gp.monster[gp.currentMap][i].worldX && gp.player.worldY < gp.monster[gp.currentMap][i].worldY) {
 							if(changeDirection4 < 45) {
-								gp.monster[i].direction = "left";
+								gp.monster[gp.currentMap][i].direction = "left";
 							}
 							else if(changeDirection4 >=45 && changeDirection4 < 90) {
-								gp.monster[i].direction = "up";
+								gp.monster[gp.currentMap][i].direction = "up";
 							}
 							else if(changeDirection4 > 90){
 								changeDirection4 = 0;
 							}
 							changeDirection4++;
 						}
-						else if(gp.player.worldX == gp.monster[i].worldX && gp.player.worldY < gp.monster[i].worldY) {
-							gp.monster[i].direction = "up";
+						else if(gp.player.worldX == gp.monster[gp.currentMap][i].worldX && gp.player.worldY < gp.monster[gp.currentMap][i].worldY) {
+							gp.monster[gp.currentMap][i].direction = "up";
 						}
-						else if(gp.player.worldX == gp.monster[i].worldX && gp.player.worldY > gp.monster[i].worldY) {
-							gp.monster[i].direction = "down";
+						else if(gp.player.worldX == gp.monster[gp.currentMap][i].worldX && gp.player.worldY > gp.monster[gp.currentMap][i].worldY) {
+							gp.monster[gp.currentMap][i].direction = "down";
 						}
-						else if(gp.player.worldX < gp.monster[i].worldX && gp.player.worldY == gp.monster[i].worldY) {
-							gp.monster[i].direction = "left";
+						else if(gp.player.worldX < gp.monster[gp.currentMap][i].worldX && gp.player.worldY == gp.monster[gp.currentMap][i].worldY) {
+							gp.monster[gp.currentMap][i].direction = "left";
 						}
-						else if(gp.player.worldX > gp.monster[i].worldX && gp.player.worldY == gp.monster[i].worldY) {
-							gp.monster[i].direction = "right";
+						else if(gp.player.worldX > gp.monster[gp.currentMap][i].worldX && gp.player.worldY == gp.monster[gp.currentMap][i].worldY) {
+							gp.monster[gp.currentMap][i].direction = "right";
 						}
 						
 					}
