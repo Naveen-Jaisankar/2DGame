@@ -48,18 +48,18 @@ public class EventHandler {
 			canTouchEvent = true;
 		}
 		if(canTouchEvent){
-			if(hit(0,27,16,"right")) {
-				damagePit(gp.dialougeState);
-			}
-			else if(hit(0,23,12,"up")) {
-				healingPool(23,12,gp.dialougeState);
-			}
-			else if(hit(0,10,39,"any")) {
-				teleport(1,12,13);
-			}
-			else if(hit(1,12,13,"any")) {
-				teleport(0,10,39);
-			}
+//			if(hit(0,27,16,"right")) {
+//				damagePit(gp.dialougeState);
+//			}
+//			else if(hit(0,23,12,"up")) {
+//				healingPool(23,12,gp.dialougeState);
+//			}
+//			else if(hit(0,10,39,"any")) {
+//				teleport(1,12,13);
+//			}
+//			else if(hit(1,12,13,"any")) {
+//				teleport(0,10,39);
+//			}
 		}
 		
 	}

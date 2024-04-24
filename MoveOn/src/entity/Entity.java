@@ -159,6 +159,14 @@ public class Entity {
 		}
 	}
 	
+	public void openDialogBox(){
+		if(dialogues[dialogueIndex]==null){
+			dialogueIndex =0;
+		}
+		gp.ui.currentDialogue = dialogues[dialogueIndex];
+		dialogueIndex++;
+	}
+	
 	public Color getParticleColor() {
 		Color color = null;
 		return color;

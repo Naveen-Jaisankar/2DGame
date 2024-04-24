@@ -48,12 +48,13 @@ public class Player extends Entity{
 	}
 	
 	public void setDefaultValues() {
-		worldX = gp.tileSize*23;
-		worldY = gp.tileSize*21;
+		worldX = gp.tileSize*44;
+		worldY = gp.tileSize*15;
 		// worldX = gp.tileSize*12;
 		// worldY = gp.tileSize*13;
 		speed =4;
 		direction = "down";
+		name = "player";
 		
 		//PLAYER STATUS
 		level =1;
@@ -172,6 +173,10 @@ public class Player extends Entity{
 //			check NPC COllision
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
+			
+			//check vehicle collision
+			int vehicleIndex = gp.cChecker.checkEntity(this, gp.vehicle);
+			interactVehicle(vehicleIndex);
 			
 			// Check monster collision
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
@@ -308,6 +313,17 @@ public class Player extends Entity{
 		}
 		
 	}
+	
+	public void interactVehicle(int index) {
+		if(index!=999) {
+			if(gp.keyHandler.qPressed) {
+				gp.keyHandler.qPressed = Boolean.FALSE;
+			}
+			gp.vehicle[gp.currentMap][index].isInteracted();			
+		}
+	}
+	
+	
 	public void contactMonster(int index){
 	if(index!=999){
 		if(invincible == false && gp.monster[gp.currentMap][index].alive == true && gp.monster[gp.currentMap][index].dying == false){

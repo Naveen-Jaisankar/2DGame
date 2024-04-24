@@ -52,6 +52,7 @@ public class CollisionChecker {
                 break;
             case "right":
                 entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
+                System.out.println("Col : " + entityRightCol + "Row : " + entityTopRow);
                 tile1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
                 tile2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
                 if(gp.tileM.tile[tile1].colllision == true || gp.tileM.tile[tile2].colllision == true){
@@ -198,6 +199,65 @@ int index = 999;
 		gp.player.solidArea.y = gp.player.solidAreaDefaultY;
 		return contactPlayer;
     	
+    }
+    
+    public int checkEntity(Entity entity, Entity target) {
+
+    	int index = 999;
+    	
+		if(target != null) {
+			//Get entity's solid area position
+			
+			entity.solidArea.x = entity.worldX + entity.solidArea.x;
+			entity.solidArea.y = entity.worldY + entity.solidArea.y;
+			
+			//Get the object's solid area position
+			target.solidArea.x = target.worldX + target.solidArea.x;
+			target.solidArea.y = target.worldY + target.solidArea.y;
+			
+			switch(entity.direction) {
+			case "up":
+				entity.solidArea.y -= entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			case "down":
+				entity.solidArea.y += entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			case "left":
+				entity.solidArea.x -= entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			case "right":
+				entity.solidArea.x += entity.speed;
+				if(entity.solidArea.intersects(target.solidArea)) {
+					
+						entity.collisionOn = true;
+					index=1;
+				}
+				break;
+			}
+			entity.solidArea.x = entity.solidAreaDefaultX;
+    		entity.solidArea.y = entity.solidAreaDefaultY;
+    		target.solidArea.x = target.solidAreaDefaultX;
+    		target.solidArea.y = target.solidAreaDefaultY;
+		}
+    		
+    	
+    	
+    	return index;
     }
 
 }

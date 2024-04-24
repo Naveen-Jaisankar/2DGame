@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 	
-	public boolean upPressed, downPressed, leftPressed, rightPressed,enterPressed, shotKeyPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed,enterPressed, shotKeyPressed,qPressed;
 	//Debug
 	boolean showDebugText = Boolean.FALSE;
 	
@@ -29,7 +29,7 @@ public class KeyHandler implements KeyListener{
 			titleState(code);
 		}
 		// play state
-		else if(gp.gameState == gp.playState){
+		else if(gp.gameState == gp.playState  && !gp.isPlayerInContactWithVehicle){
 			playState(code);
 		}
 		// Pause state
@@ -171,10 +171,15 @@ public class KeyHandler implements KeyListener{
 			}
 		}
 		
+		if(code == KeyEvent.VK_Q) {
+			qPressed = true;
+			
+		}
+		
 		if(code == KeyEvent.VK_R) {
 			switch (gp.currentMap) {
 				case 0:
-					gp.tileM.loadMap("/maps/worldV3.txt",gp.currentMap);
+					gp.tileM.loadMap("/maps/home.txt",gp.currentMap);
 					break;
 				case 1:
 					gp.tileM.loadMap("/maps/interior01.txt",gp.currentMap);
@@ -195,9 +200,16 @@ public class KeyHandler implements KeyListener{
 	}
 	
 	public void dialogueState(int code) {
-		if(code == KeyEvent.VK_ENTER) {
+		if(code == KeyEvent.VK_ENTER 
+				|| code == KeyEvent.VK_Q) {
+			if(code == KeyEvent.VK_Q) {
+				qPressed = true;
+			}
 			gp.gameState= gp.playState;
 			
+		}
+		if(code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.playState;
 		}
 	}
 	
