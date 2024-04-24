@@ -125,11 +125,11 @@ public class Entity {
 	public void checkDrop() {}
 	
 	public void dropItem(Entity droppedItem) {
-		for( int i=0;i<gp.obj.length;i++) {
-			if(gp.obj[i] == null) {
-				gp.obj[i] = droppedItem;
-				gp.obj[i].worldX  = worldX;
-				gp.obj[i].worldY = worldY;
+		for( int i=0;i<gp.obj[1].length;i++) {
+			if(gp.obj[gp.currentMap][i] == null) {
+				gp.obj[gp.currentMap][i] = droppedItem;
+				gp.obj[gp.currentMap][i].worldX  = worldX;
+				gp.obj[gp.currentMap][i].worldY = worldY;
 				break;
 			}
 		}
@@ -186,10 +186,10 @@ public class Entity {
 		int maxLife = generator.getParticleMaxLife();
 		
 		
-		Particle p1 = new Particle(gp,generator,color,size, speed, maxLife,-2,-1);
-		Particle p2 = new Particle(gp,generator,color,size, speed, maxLife,2,-1);
-		Particle p3 = new Particle(gp,generator,color,size, speed, maxLife,-2,1);
-		Particle p4 = new Particle(gp,generator,color,size, speed, maxLife,2,1);
+		Particle p1 = new Particle(gp,target,color,size, speed, maxLife,-2,-1);
+		Particle p2 = new Particle(gp,target,color,size, speed, maxLife,2,-1);
+		Particle p3 = new Particle(gp,target,color,size, speed, maxLife,-2,1);
+		Particle p4 = new Particle(gp,target,color,size, speed, maxLife,2,1);
 		
 		gp.particleList.add(p1);gp.particleList.add(p2);gp.particleList.add(p3);gp.particleList.add(p4);
 	}
