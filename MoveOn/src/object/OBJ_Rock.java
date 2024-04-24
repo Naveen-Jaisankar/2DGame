@@ -10,6 +10,8 @@ import tile_interactive.InteractiveTile;
 
 public class OBJ_Rock extends Projectile {
 
+	
+	
     GamePanel gp;
 
     public OBJ_Rock(GamePanel gp) {
