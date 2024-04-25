@@ -170,6 +170,7 @@ public class Player extends Entity{
 			int objIndex =  gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
+			
 //			check NPC COllision
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
@@ -306,13 +307,16 @@ public class Player extends Entity{
 			if(index!=999) {
 				attackCancelled = Boolean.TRUE;
 				gp.gameState = gp.dialougeState;
-				gp.npc[gp.currentMap][index].speak();
+				gp.npc[gp.currentMap][index].openDialogBox();
 
 			}
 				
 		}
 		
 	}
+
+
+	
 	
 	public void interactVehicle(int index) {
 		if(index!=999) {
@@ -409,7 +413,7 @@ public class Player extends Entity{
 		if(index != 999) {
 			//PICKUP ONLY ITEMS
 			if(gp.obj[gp.currentMap][index].type == type_pickUpOnly) {
-				System.out.println("Picking : " +  gp.obj[gp.currentMap][index].name);
+				// System.out.println("Picking : " +  gp.obj[gp.currentMap][index].name);
 				gp.obj[gp.currentMap][index].use(this);
 				gp.obj[gp.currentMap][index] = null;
 			}

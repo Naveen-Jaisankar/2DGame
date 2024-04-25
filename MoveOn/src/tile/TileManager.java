@@ -24,6 +24,11 @@ public class TileManager {
 		loadMap("/maps/home.txt",0);
 		loadMap("/maps/homeInterior.txt",1);
 		loadMap("/maps/college.txt",2);
+		loadMap("/maps/homeInterior.txt",3);
+		loadMap("/maps/market.txt",4);
+		loadMap("/maps/homeInterior.txt",5);
+		loadMap("/maps/playground.txt",6);
+		loadMap("/maps/homeInterior.txt",7);
 	}
 	
 	public void getTileImage() {

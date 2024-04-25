@@ -3,40 +3,61 @@ package model;
 import com.google.gson.annotations.SerializedName;
 
 public class VehicleModel {
-	
-	@SerializedName("vehicle_name")
-	private String vehicleName;
-	
-	@SerializedName("image_name")
+    
+    @SerializedName("sourceMap")
+    private int sourceMap;
+
+    @SerializedName("targetMap")
+    private int targetMap;
+
+    @SerializedName("vehicle_name")
+    private String vehicleName;
+
+    @SerializedName("image_name")
     private String imageName;
-	
-	@SerializedName("direction")
+
+    @SerializedName("direction")
     private String direction;
-	
-	@SerializedName("sourceDestinationX")
+
+    @SerializedName("sourceDestinationX")
     private int sourceDestinationX;
-	
-	@SerializedName("sourceDestinationY")
+
+    @SerializedName("sourceDestinationY")
     private int sourceDestinationY;
-	
-	@SerializedName("sourceCurrentX")
+
+    @SerializedName("sourceCurrentX")
     private int sourceCurrentX;
-	
-	@SerializedName("sourceCurrentY")
+
+    @SerializedName("sourceCurrentY")
     private int sourceCurrentY;
-	
-	@SerializedName("targetDestinationX")
+
+    @SerializedName("targetDestinationX")
     private int targetDestinationX;
-	
-	@SerializedName("targetDestinationY")
+
+    @SerializedName("targetDestinationY")
     private int targetDestinationY;
-	
-	@SerializedName("targetCurrentX")
+
+    @SerializedName("targetCurrentX")
     private int targetCurrentX;
-	
-	@SerializedName("targetCurrentY")
+
+    @SerializedName("targetCurrentY")
     private int targetCurrentY;
 
+    public int getSourceMap() {
+        return sourceMap;
+    }
+
+    public void setSourceMap(int sourceMap) {
+        this.sourceMap = sourceMap;
+    }
+
+    public int getTargetMap() {
+        return targetMap;
+    }
+
+    public void setTargetMap(int targetMap) {
+        this.targetMap = targetMap;
+    }
 	public String getVehicleName() {
 		return vehicleName;
 	}
@@ -125,17 +146,16 @@ public class VehicleModel {
 	public void setTargetCurrentY(int targetCurrentY) {
 		this.targetCurrentY = targetCurrentY;
 	}
-	
 
-	@Override
-	public String toString() {
-		return "VehicleModel [vehicleName=" + vehicleName + ", imageName=" + imageName + ", direction=" + direction
-				+ ", sourceDestinationX=" + sourceDestinationX + ", sourceDestinationY=" + sourceDestinationY
-				+ ", sourceCurrentX=" + sourceCurrentX + ", sourceCurrentY=" + sourceCurrentY + ", targetDestinationX="
-				+ targetDestinationX + ", targetDestinationY=" + targetDestinationY + ", targetCurrentX="
-				+ targetCurrentX + ", targetCurrentY=" + targetCurrentY + "]";
-	}
-	
-    
-    
+    // Existing getters and setters for other fields remain unchanged.
+
+    @Override
+    public String toString() {
+        return "VehicleModel [sourceMap=" + sourceMap + ", targetMap=" + targetMap
+                + ", vehicleName=" + vehicleName + ", imageName=" + imageName + ", direction=" + direction
+                + ", sourceDestinationX=" + sourceDestinationX + ", sourceDestinationY=" + sourceDestinationY
+                + ", sourceCurrentX=" + sourceCurrentX + ", sourceCurrentY=" + sourceCurrentY + ", targetDestinationX="
+                + targetDestinationX + ", targetDestinationY=" + targetDestinationY + ", targetCurrentX="
+                + targetCurrentX + ", targetCurrentY=" + targetCurrentY + "]";
+    }
 }

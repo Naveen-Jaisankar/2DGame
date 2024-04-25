@@ -13,17 +13,18 @@ public abstract class NonPlayableEntity extends Entity{
 	public int target_destination_y;
 	public static final String NPC_IMAGE_PATH = "/npc/";
 	public String imageName;
-	
+	public int sourceMap;
+	public int targetMap;
 	public NonPlayableEntity(GamePanel gp,String direction, int speed ,int currentX,int currentY) {
 		super(gp);
 		super.direction = direction;
-		super.speed = speed;
+		super.speed = 3;
 		super.worldX = gp.tileSize*currentX;
 		super.worldY = gp.tileSize*currentY;
 		
 	}
 	
-	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY);
+	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap);
 	
 	public abstract void loadImages() ;
 	
@@ -41,7 +42,6 @@ public abstract class NonPlayableEntity extends Entity{
 	}
 	
 	public void setActions(String direction) {
-		System.out.println("SetActions called");
 		if(gp.keyHandler.qPressed) {
 			gp.keyHandler.qPressed=Boolean.FALSE;
 			this.isInteracted = Boolean.TRUE;

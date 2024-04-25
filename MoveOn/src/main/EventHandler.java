@@ -1,4 +1,5 @@
 package main;
+import java.awt.Rectangle;
 
 
 public class EventHandler {
@@ -38,18 +39,17 @@ public class EventHandler {
 		
 	}
 	
-	public void checkEventForVehicles(int vehicleIndex,int sourceDestinationX, int sourceDestinationY,int targetCurrentX, int targetCurrentY,int targetDestinationX, int targetDestinationY) {
-		System.out.println("checkEventForVehicles is called for vehicle");
+	public void checkEventForVehicles(int vehicleIndex,int sourceDestinationX, int sourceDestinationY,int targetCurrentX, int targetCurrentY,int targetDestinationX, int targetDestinationY, int sourceMap, int targetMap) {
 		
-		int xDistance = Math.abs(gp.vehicle[0][3].worldX - previousEventX);
-		int yDistance = Math.abs(gp.vehicle[0][3].worldY - previousEventY);
+		int xDistance = Math.abs(gp.vehicle[sourceMap][vehicleIndex].worldX - previousEventX);
+		int yDistance = Math.abs(gp.vehicle[sourceMap][vehicleIndex].worldY - previousEventY);
 		int distance = Math.max(xDistance, yDistance);
 		if(distance>gp.tileSize){
 			canTouchEvent = true;
 		}
 		if(canTouchEvent){
-			if(isVehicleInContactWithTeleportTile(0,sourceDestinationX,sourceDestinationY,"any") && gp.isPlayerInContactWithVehicle) {
-				teleportPlayerAndVehicle(2,targetCurrentX,targetCurrentY,targetDestinationX,targetDestinationY);
+			if(isVehicleInContactWithTeleportTile(vehicleIndex,sourceMap,sourceDestinationX,sourceDestinationY,"any") && gp.isPlayerInContactWithVehicle) {
+				teleportPlayerAndVehicle(vehicleIndex,targetMap,targetCurrentX,targetCurrentY,targetDestinationX,targetDestinationY);
 			}
 		}
 	}
@@ -95,31 +95,67 @@ public class EventHandler {
 	}
 	
 	//This method is similar to hit method
-	public boolean isVehicleInContactWithTeleportTile(int map,int col, int row, String reqDirection) {
-		boolean hit = Boolean.FALSE;
-		if(map==gp.currentMap){
-			gp.vehicle[0][3].solidArea.x = gp.vehicle[0][3].worldX + gp.vehicle[0][3].solidArea.x;
-			gp.vehicle[0][3].solidArea.y = gp.vehicle[0][3].worldY + gp.vehicle[0][3].solidArea.y;
-			eventRect[map][col][row].x = col * gp.tileSize + eventRect[map][col][row].x;
-			eventRect[map][col][row].y = row * gp.tileSize + eventRect[map][col][row].y;
+	// public boolean isVehicleInContactWithTeleportTile(int vehicleIndex,int map,int col, int row, String reqDirection) {
+	// 	boolean hit = Boolean.FALSE;
+	// 	if(map==gp.currentMap){
+	// 		gp.vehicle[map][vehicleIndex].solidArea.x = gp.vehicle[map][vehicleIndex].worldX + gp.vehicle[map][vehicleIndex].solidArea.x;
+	// 		gp.vehicle[map][vehicleIndex].solidArea.y = gp.vehicle[map][vehicleIndex].worldY + gp.vehicle[map][vehicleIndex].solidArea.y;
+	// 		eventRect[map][col][row].x = col * gp.tileSize + eventRect[map][col][row].x;
+	// 		eventRect[map][col][row].y = row * gp.tileSize + eventRect[map][col][row].y; 
+
+	// 		System.out.println(gp.vehicle[map][vehicleIndex].solidArea +""+ (eventRect[map][col][row]));
 			
-			if(gp.vehicle[0][3].solidArea.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventDone == false) {
-				if(gp.vehicle[0][3].direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
-					hit = Boolean.TRUE;
+	// 		if(gp.vehicle[map][vehicleIndex].solidArea.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventDone == false) {
+	// 			if(gp.vehicle[map][vehicleIndex].direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
+	// 				hit = Boolean.TRUE;
 	
-					previousEventX = gp.vehicle[0][3].worldX;
-					previousEventY=gp.vehicle[0][3].worldY;
+	// 				previousEventX = gp.vehicle[map][vehicleIndex].worldX;
+	// 				previousEventY=gp.vehicle[map][vehicleIndex].worldY;
+	// 			}
+	// 		}
+			
+	// 		gp.vehicle[map][vehicleIndex].solidArea.x = gp.vehicle[map][vehicleIndex].solidAreaDefaultX;
+	// 		gp.vehicle[map][vehicleIndex].solidArea.y = gp.vehicle[map][vehicleIndex].solidAreaDefaultY;
+	// 		eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
+	// 		eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
+	// 	}
+	// 	return hit;
+	// }
+	
+	public boolean isVehicleInContactWithTeleportTile(int vehicleIndex, int map, int col, int row, String reqDirection) {
+		boolean hit = false;
+		if (map == gp.currentMap) {
+			// Temporary variables for adjusted positions
+			// System.out.println("worldx: "+gp.vehicle[map][vehicleIndex].worldX+" worldy:"+gp.vehicle[map][vehicleIndex].worldY);
+			// System.out.println("playerworldx: "+gp.player.worldX+" worldy:"+gp.player.worldY);
+
+			Rectangle vehicleSolidArea = new Rectangle(gp.vehicle[map][vehicleIndex].solidArea);
+			vehicleSolidArea.x += gp.vehicle[map][vehicleIndex].worldX;
+			vehicleSolidArea.y += gp.vehicle[map][vehicleIndex].worldY;
+			
+			Rectangle eventRectangle = new Rectangle(eventRect[map][col][row]);
+			eventRectangle.x += col * gp.tileSize;
+			eventRectangle.y += row * gp.tileSize;
+			// System.out.println("Vehicle Solid Area: " + vehicleSolidArea);
+			// System.out.println("Event Rectangle: " + eventRectangle);
+			// System.out.println("Intersects: " + vehicleSolidArea.intersects(eventRectangle));
+			// System.out.println("Event Done: " + eventRect[map][col][row].eventDone);
+			// System.out.println("Direction: " + gp.vehicle[map][vehicleIndex].direction + " Required: " + reqDirection);
+
+	
+			if (vehicleSolidArea.intersects(eventRectangle) && !eventRect[map][col][row].eventDone) {
+				if (gp.vehicle[map][vehicleIndex].direction.equals(reqDirection) || "any".equals(reqDirection)) {
+					hit = true;
+					// If necessary, record the vehicle's current world position
+					previousEventX = gp.vehicle[map][vehicleIndex].worldX;
+					previousEventY = gp.vehicle[map][vehicleIndex].worldY;
 				}
 			}
-			
-			gp.vehicle[0][3].solidArea.x = gp.vehicle[0][3].solidAreaDefaultX;
-			gp.vehicle[0][3].solidArea.y = gp.vehicle[0][3].solidAreaDefaultY;
-			eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
-			eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
 		}
 		return hit;
 	}
 	
+
 	public boolean hit(int map,int col, int row, String reqDirection) {
 		boolean hit = Boolean.FALSE;
 		if(map==gp.currentMap){
@@ -170,20 +206,25 @@ public class EventHandler {
 		
 	}
 
-	public void teleportPlayerAndVehicle(int map, int col, int row, int targetDestinationX, int targetDestinationY){
+	public void teleportPlayerAndVehicle(int vehicleIndex,int map, int col, int row, int targetDestinationX, int targetDestinationY){
+		System.out.println(vehicleIndex+" -" + map+ " -" +col + " -" +row+ " -" +targetDestinationX +" -" + targetDestinationY );
 		gp.currentMap = map;
 		gp.isPlayerInContactWithVehicle = Boolean.TRUE;
 		gp.keyHandler.qPressed = Boolean.TRUE;
 		gp.player.worldX = gp.tileSize * col;
 		gp.player.worldY = gp.tileSize * row;
-		gp.vehicle[map][3].worldX = gp.tileSize * col;
-		gp.vehicle[map][3].worldY = gp.tileSize * row;
-		previousEventX = gp.player.worldX;
-		previousEventY = gp.player.worldY;
-		canTouchEvent = false;
-		gp.playSoundEffect(13);
-		gp.vehicle[map][3].source_destination_x =targetDestinationX;
-		gp.vehicle[map][3].source_destination_y =targetDestinationY;
+		System.out.println(gp.vehicle[map][vehicleIndex]);
+		if(gp.vehicle[map][vehicleIndex]!= null){
+			gp.vehicle[map][vehicleIndex].worldX = gp.tileSize * col;
+			gp.vehicle[map][vehicleIndex].worldY = gp.tileSize * row;
+			gp.playSoundEffect(13);
+			gp.vehicle[map][vehicleIndex].source_destination_x =targetDestinationX;
+			gp.vehicle[map][vehicleIndex].source_destination_y =targetDestinationY;		
+			previousEventX = gp.player.worldX;
+			previousEventY = gp.player.worldY;
+			canTouchEvent = false;
+		}
+		
 
 	}
 	

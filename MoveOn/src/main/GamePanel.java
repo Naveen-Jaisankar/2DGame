@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this,keyHandler);
 	public Entity[][] obj = new Entity[maxMap][20];
 	public Entity npc[][] = new Entity[maxMap][10];
-	public NonPlayableEntity vehicle[][] = new NonPlayableEntity[maxMap][10];
+	public NonPlayableEntity vehicle[][] = new NonPlayableEntity[maxMap][20];
 	public Entity monster[][] = new Entity[maxMap][20];
 	public InteractiveTile iTile [][] = new InteractiveTile[maxMap][50];
 	public ArrayList<Entity> entityList = new ArrayList<>();
@@ -278,12 +278,13 @@ public class GamePanel extends JPanel implements Runnable{
 				entityList.add(particleList.get(i));
 			}
 		}
-		
+		// vehicle
 		for(int i=0; i<vehicle[1].length;i++){
 			if(vehicle[currentMap][i]!=null){
 				entityList.add(vehicle[currentMap][i]);
 			}
 		}
+
 		
 		
 		
