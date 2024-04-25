@@ -165,7 +165,8 @@ public class AssetSetter {
     	
     	int i = 0;
     	for (VehicleModel vehicle : vehicles) {
-    		gp.vehicle[0][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getDestinationX(),vehicle.getDestinationY(),vehicle.getCurrentX(),vehicle.getCurrentY());
+    		gp.vehicle[0][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationX(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
+    		gp.vehicle[2][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationY(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
     		i++;
     	}
     }

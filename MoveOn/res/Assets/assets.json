@@ -3,36 +3,52 @@
       "vehicle_name":"Bus",
       "image_name":"car",
       "direction":"down",
-      "destinationX":"24",
-      "destinationY":"30",
-      "currentX":"24",
-      "currentY":"22"
+      "sourceCurrentX":"24",
+      "sourceCurrentY":"22",
+      "sourceDestinationX":"24",
+      "sourceDestinationY":"30",
+      "targetCurrentX":"24",
+      "targetCurrentY":"22",
+      "targetDestinationX":"24",
+      "targetDestinationY":"30"
    },
    {
       "vehicle_name":"Car",
       "image_name":"merchant_down_1",
       "direction":"up",
-      "destinationX":"31",
-      "destinationY":"1",
-      "currentX":"31",
-      "currentY":"9"
+      "sourceCurrentX":"31",
+      "sourceCurrentY":"12",
+      "sourceDestinationX":"31",
+      "sourceDestinationY":"1",
+      "targetCurrentX":"24",
+      "targetCurrentY":"22",
+      "targetDestinationX":"24",
+      "targetDestinationY":"30"
    },
    {
       "vehicle_name":"Luas",
       "image_name":"oldman_left_1",
       "direction":"left",
-      "destinationX":"1",
-      "destinationY":"17",
-      "currentX":"19",
-      "currentY":"17"
+      "sourceCurrentX":"19",
+      "sourceCurrentY":"15",
+      "sourceDestinationX":"1",
+      "sourceDestinationY":"17",
+      "targetCurrentX":"24",
+      "targetCurrentY":"22",
+      "targetDestinationX":"24",
+      "targetDestinationY":"30"
    },
    {
       "vehicle_name":"Bike",
       "image_name":"bike",
       "direction":"right",
-      "destinationX":"52",
-      "destinationY":"19",
-      "currentX":"26",
-      "currentY":"19"
+      "sourceCurrentX":"26",
+      "sourceCurrentY":"18",
+      "sourceDestinationX":"45",
+      "sourceDestinationY":"18",
+      "targetCurrentX":"25",
+      "targetCurrentY":"18",
+      "targetDestinationX":"41",
+      "targetDestinationY":"18"
    }
 ]

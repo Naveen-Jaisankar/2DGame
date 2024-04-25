@@ -6,19 +6,24 @@ public class Vehicle extends NonPlayableEntity{
 	
 	public static final int SPEED = 1;
 	
-	public Vehicle(GamePanel gp,String imageName,String direction,int destinationX,int destinationY,int currentX, int currentY) {
-		super(gp,direction,SPEED,currentX,currentY);
-		setDefaultValues(imageName,direction,destinationX,destinationY);
+	public Vehicle(GamePanel gp,String imageName,String direction,int sourceDestinationX,int sourceDestinationY,int sourceCurrentX, int sourceCurrentY,
+			int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY) {
+		super(gp,direction,SPEED,sourceCurrentX,sourceCurrentY);
+		setDefaultValues(imageName,direction,sourceDestinationX,sourceDestinationY,targetDestinationX,targetDestinationY,targetCurrentX,targetCurrentY);
 		loadImages();
 		setInstructions();
 	}
 
 
 	@Override
-	public void setDefaultValues(String imageName, String direction, int destinationX, int destinationY) {
+	public void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY) {
 		isInteracted = Boolean.FALSE;
-		this.destination_x = destinationX ;
-		this.destination_y = destinationY ;
+		this.source_destination_x = destinationX ;
+		this.source_destination_y = destinationY ;
+		this.target_current_x = targetCurrentX ;
+		this.target_current_y = targetCurrentY ;
+		this.target_destination_x = targetDestinationX ;
+		this.target_destination_y = targetDestinationY ;
 		this.direction = direction;
 		this.imageName = imageName;
 		
@@ -47,21 +52,7 @@ public class Vehicle extends NonPlayableEntity{
 		if(npcIndex!=999 & (gp.keyHandler.qPressed || isInteracted)) {
 			
 			setActions(this.direction);
-//			if(gp.keyHandler.fPressed) {
-//				gp.keyHandler.fPressed=Boolean.FALSE;
-//				isInteracted = Boolean.TRUE;
-//				gp.isPlayerInContactWithVehicle = Boolean.TRUE;
-//				System.out.println("Bus" + gp.isPlayerInContactWithVehicle);
-//			}
-//			
-//			if(worldY<=destination_y*gp.tileSize) {
-//				worldY += speed;
-//				gp.player.worldY += speed;
-//			}else if(worldY >= destination_y*gp.tileSize) {
-//				System.out.println("going to turn of interaction");
-//				isInteracted = Boolean.FALSE;
-//				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
-//			}
+			gp.eHandler.checkEventForVehicles(npcIndex,this.source_destination_x , this.source_destination_y,this.target_current_x,this.target_current_y,this.target_destination_x,this.target_destination_y);
 			
 		}
 		

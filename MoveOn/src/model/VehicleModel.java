@@ -13,67 +13,129 @@ public class VehicleModel {
 	@SerializedName("direction")
     private String direction;
 	
-	@SerializedName("destinationX")
-    private int destinationX;
+	@SerializedName("sourceDestinationX")
+    private int sourceDestinationX;
 	
-	@SerializedName("destinationY")
-    private int destinationY;
+	@SerializedName("sourceDestinationY")
+    private int sourceDestinationY;
 	
-	@SerializedName("currentX")
-    private int currentX;
+	@SerializedName("sourceCurrentX")
+    private int sourceCurrentX;
 	
-	@SerializedName("currentY")
-    private int currentY;
+	@SerializedName("sourceCurrentY")
+    private int sourceCurrentY;
 	
+	@SerializedName("targetDestinationX")
+    private int targetDestinationX;
+	
+	@SerializedName("targetDestinationY")
+    private int targetDestinationY;
+	
+	@SerializedName("targetCurrentX")
+    private int targetCurrentX;
+	
+	@SerializedName("targetCurrentY")
+    private int targetCurrentY;
+
 	public String getVehicleName() {
 		return vehicleName;
 	}
+
+
 	public void setVehicleName(String vehicleName) {
 		this.vehicleName = vehicleName;
 	}
+
 	public String getImageName() {
 		return imageName;
 	}
+
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
+
 	public String getDirection() {
 		return direction;
 	}
+
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
-	public int getDestinationX() {
-		return destinationX;
+
+	public int getSourceDestinationX() {
+		return sourceDestinationX;
 	}
-	public void setDestinationX(int destinationX) {
-		this.destinationX = destinationX;
+
+	public void setSourceDestinationX(int sourceDestinationX) {
+		this.sourceDestinationX = sourceDestinationX;
 	}
-	public int getDestinationY() {
-		return destinationY;
+
+	public int getSourceDestinationY() {
+		return sourceDestinationY;
 	}
-	public void setDestinationY(int destinationY) {
-		this.destinationY = destinationY;
+
+	public void setSourceDestinationY(int sourceDestinationY) {
+		this.sourceDestinationY = sourceDestinationY;
 	}
-	public int getCurrentX() {
-		return currentX;
+
+	public int getSourceCurrentX() {
+		return sourceCurrentX;
 	}
-	public void setCurrentX(int currentX) {
-		this.currentX = currentX;
+
+	public void setSourceCurrentX(int sourceCurrentX) {
+		this.sourceCurrentX = sourceCurrentX;
 	}
-	public int getCurrentY() {
-		return currentY;
+
+	public int getSourceCurrentY() {
+		return sourceCurrentY;
 	}
-	public void setCurrentY(int currentY) {
-		this.currentY = currentY;
+
+	public void setSourceCurrentY(int sourceCurrentY) {
+		this.sourceCurrentY = sourceCurrentY;
+	}
+
+	public int getTargetDestinationX() {
+		return targetDestinationX;
+	}
+
+	public void setTargetDestinationX(int targetDestinationX) {
+		this.targetDestinationX = targetDestinationX;
+	}
+
+	public int getTargetDestinationY() {
+		return targetDestinationY;
+	}
+
+	public void setTargetDestinationY(int targetDestinationY) {
+		this.targetDestinationY = targetDestinationY;
+	}
+
+	public int getTargetCurrentX() {
+		return targetCurrentX;
+	}
+
+	public void setTargetCurrentX(int targetCurrentX) {
+		this.targetCurrentX = targetCurrentX;
+	}
+
+	public int getTargetCurrentY() {
+		return targetCurrentY;
+	}
+
+	public void setTargetCurrentY(int targetCurrentY) {
+		this.targetCurrentY = targetCurrentY;
 	}
 	
+
 	@Override
 	public String toString() {
 		return "VehicleModel [vehicleName=" + vehicleName + ", imageName=" + imageName + ", direction=" + direction
-				+ ", destinationX=" + destinationX + ", destinationY=" + destinationY + ", currentX=" + currentX
-				+ ", currentY=" + currentY + "]";
+				+ ", sourceDestinationX=" + sourceDestinationX + ", sourceDestinationY=" + sourceDestinationY
+				+ ", sourceCurrentX=" + sourceCurrentX + ", sourceCurrentY=" + sourceCurrentY + ", targetDestinationX="
+				+ targetDestinationX + ", targetDestinationY=" + targetDestinationY + ", targetCurrentX="
+				+ targetCurrentX + ", targetCurrentY=" + targetCurrentY + "]";
 	}
+	
     
     
 }
