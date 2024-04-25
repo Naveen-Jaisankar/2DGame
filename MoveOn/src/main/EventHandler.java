@@ -1,6 +1,8 @@
 package main;
 import java.awt.Rectangle;
 
+import entity.NonPlayableEntity;
+
 
 public class EventHandler {
 	
@@ -39,20 +41,32 @@ public class EventHandler {
 		
 	}
 	
-	public void checkEventForVehicles(int vehicleIndex,int sourceDestinationX, int sourceDestinationY,int targetCurrentX, int targetCurrentY,int targetDestinationX, int targetDestinationY, int sourceMap, int targetMap) {
+	// public void checkEventForVehicles(int vehicleIndex,int sourceDestinationX, int sourceDestinationY,int targetCurrentX, int targetCurrentY,int targetDestinationX, int targetDestinationY, int sourceMap, int targetMap) {
 		
-		int xDistance = Math.abs(gp.vehicle[sourceMap][vehicleIndex].worldX - previousEventX);
-		int yDistance = Math.abs(gp.vehicle[sourceMap][vehicleIndex].worldY - previousEventY);
-		int distance = Math.max(xDistance, yDistance);
-		if(distance>gp.tileSize){
-			canTouchEvent = true;
-		}
-		if(canTouchEvent){
-			if(isVehicleInContactWithTeleportTile(vehicleIndex,sourceMap,sourceDestinationX,sourceDestinationY,"any") && gp.isPlayerInContactWithVehicle) {
-				teleportPlayerAndVehicle(vehicleIndex,targetMap,targetCurrentX,targetCurrentY,targetDestinationX,targetDestinationY);
+	// 	int xDistance = Math.abs(gp.vehicle[sourceMap][vehicleIndex].worldX - previousEventX);
+	// 	int yDistance = Math.abs(gp.vehicle[sourceMap][vehicleIndex].worldY - previousEventY);
+	// 	int distance = Math.max(xDistance, yDistance);
+	// 	if(distance>gp.tileSize){
+	// 		canTouchEvent = true;
+	// 	}
+	// 	if(canTouchEvent){
+	// 		if(isVehicleInContactWithTeleportTile(vehicleIndex,sourceMap,sourceDestinationX,sourceDestinationY,"any") && gp.isPlayerInContactWithVehicle) {
+	// 			teleportPlayerAndVehicle(vehicleIndex,targetMap,targetCurrentX,targetCurrentY,targetDestinationX,targetDestinationY);
+	// 		}
+	// 	}
+	// }
+	public void checkEventForVehicles(int vehicleIndex) {
+		NonPlayableEntity vehicle = gp.vehicle[gp.currentMap][vehicleIndex];
+		int sourceDestinationX = vehicle.source_destination_x;
+		int sourceDestinationY = vehicle.source_destination_y;
+	
+		if (isVehicleInContactWithTeleportTile(vehicleIndex, gp.currentMap, sourceDestinationX, sourceDestinationY, "any")) {
+			if (gp.isPlayerInContactWithVehicle) {
+				teleportPlayerAndVehicle(vehicleIndex, vehicle.targetMap, vehicle.target_current_x, vehicle.target_current_y, vehicle.target_destination_x, vehicle.target_destination_y);
 			}
 		}
 	}
+	
 	
 	
 	public void checkEvent() {
@@ -123,11 +137,9 @@ public class EventHandler {
 	// }
 	
 	public boolean isVehicleInContactWithTeleportTile(int vehicleIndex, int map, int col, int row, String reqDirection) {
+		// System.out.println( vehicleIndex+" "+ map+" "+ col+" "+row+" "+reqDirection);
 		boolean hit = false;
 		if (map == gp.currentMap) {
-			// Temporary variables for adjusted positions
-			// System.out.println("worldx: "+gp.vehicle[map][vehicleIndex].worldX+" worldy:"+gp.vehicle[map][vehicleIndex].worldY);
-			// System.out.println("playerworldx: "+gp.player.worldX+" worldy:"+gp.player.worldY);
 
 			Rectangle vehicleSolidArea = new Rectangle(gp.vehicle[map][vehicleIndex].solidArea);
 			vehicleSolidArea.x += gp.vehicle[map][vehicleIndex].worldX;
@@ -136,11 +148,6 @@ public class EventHandler {
 			Rectangle eventRectangle = new Rectangle(eventRect[map][col][row]);
 			eventRectangle.x += col * gp.tileSize;
 			eventRectangle.y += row * gp.tileSize;
-			// System.out.println("Vehicle Solid Area: " + vehicleSolidArea);
-			// System.out.println("Event Rectangle: " + eventRectangle);
-			// System.out.println("Intersects: " + vehicleSolidArea.intersects(eventRectangle));
-			// System.out.println("Event Done: " + eventRect[map][col][row].eventDone);
-			// System.out.println("Direction: " + gp.vehicle[map][vehicleIndex].direction + " Required: " + reqDirection);
 
 	
 			if (vehicleSolidArea.intersects(eventRectangle) && !eventRect[map][col][row].eventDone) {
@@ -206,27 +213,94 @@ public class EventHandler {
 		
 	}
 
-	public void teleportPlayerAndVehicle(int vehicleIndex,int map, int col, int row, int targetDestinationX, int targetDestinationY){
-		System.out.println(vehicleIndex+" -" + map+ " -" +col + " -" +row+ " -" +targetDestinationX +" -" + targetDestinationY );
-		gp.currentMap = map;
-		gp.isPlayerInContactWithVehicle = Boolean.TRUE;
-		gp.keyHandler.qPressed = Boolean.TRUE;
-		gp.player.worldX = gp.tileSize * col;
-		gp.player.worldY = gp.tileSize * row;
-		System.out.println(gp.vehicle[map][vehicleIndex]);
-		if(gp.vehicle[map][vehicleIndex]!= null){
-			gp.vehicle[map][vehicleIndex].worldX = gp.tileSize * col;
-			gp.vehicle[map][vehicleIndex].worldY = gp.tileSize * row;
-			gp.playSoundEffect(13);
-			gp.vehicle[map][vehicleIndex].source_destination_x =targetDestinationX;
-			gp.vehicle[map][vehicleIndex].source_destination_y =targetDestinationY;		
-			previousEventX = gp.player.worldX;
-			previousEventY = gp.player.worldY;
-			canTouchEvent = false;
-		}
+	// public void teleportPlayerAndVehicle(int vehicleIndex,int map, int col, int row, int targetDestinationX, int targetDestinationY){
+	// 	System.out.println(vehicleIndex+" -" + map+ " -" +col + " -" +row+ " -" +targetDestinationX +" -" + targetDestinationY );
+	// 	gp.prevMap = gp.currentMap;
+	// 	gp.currentMap = map;
+	// 	gp.isPlayerInContactWithVehicle = Boolean.TRUE;
+	// 	gp.keyHandler.qPressed = Boolean.TRUE;
+	// 	gp.player.worldX = gp.tileSize * col;
+	// 	gp.player.worldY = gp.tileSize * row;
+	// 	System.out.println(gp.vehicle[gp.prevMap][vehicleIndex]);
+	// 	if(map == gp.prevMap){
+	// 		gp.vehicle[gp.prevMap][vehicleIndex].worldX = gp.tileSize * col;
+	// 		gp.vehicle[gp.prevMap][vehicleIndex].worldY = gp.tileSize * row;
+	// 		gp.playSoundEffect(13);
+	// 		gp.vehicle[gp.prevMap][vehicleIndex].source_destination_x =targetDestinationX;
+	// 		gp.vehicle[gp.prevMap][vehicleIndex].source_destination_y =targetDestinationY;		
+	// 		previousEventX = gp.vehicle[gp.prevMap][vehicleIndex].worldX ;
+	// 		previousEventY = gp.vehicle[gp.prevMap][vehicleIndex].worldY;
+	// 		canTouchEvent = false;
+	// 	}
 		
 
+	// }
+
+	public void teleportPlayerAndVehicle(int vehicleIndex, int targetMap, int targetCurrentX, int targetCurrentY, int targetDestinationX, int targetDestinationY) {
+		System.out.println("Teleporting player from map: "+gp.currentMap+" at position X: "+gp.vehicle[gp.currentMap][vehicleIndex].source_current_x+" Y: "+gp.vehicle[gp.currentMap][vehicleIndex].source_current_y+" to map: " + targetMap + " at position X: " + targetCurrentX + " Y: " + targetCurrentY);
+		
+		// Update the map and position
+		gp.prevMap = gp.currentMap;
+		gp.currentMap = targetMap;
+		gp.player.worldX = targetCurrentX * (gp.tileSize-2) ;
+		gp.player.worldY = targetCurrentY * (gp.tileSize-2) ;
+		
+		// Update the vehicle position if it is the same map
+		// if (gp.prevMap == gp.currentMap) {
+			gp.vehicle[gp.currentMap][vehicleIndex].worldX = targetCurrentX * gp.tileSize;
+			gp.vehicle[gp.currentMap][vehicleIndex].worldY = targetCurrentY * gp.tileSize;
+		// }
+	
+		// Reset interaction flags
+		gp.isPlayerInContactWithVehicle = false;
+		gp.keyHandler.qPressed = false;
+		
+		// Optional: Trigger some effects or sound
+		gp.playSoundEffect(13); // Sound effect ID 13 for teleportation
+		calculateCarbonFootPrint( vehicleIndex,gp.prevMap);
 	}
+
+	public void calculateCarbonFootPrint(int vehicleIndex, int map){
+
+		int totalTiles = Math.abs(gp.vehicle[map][vehicleIndex].source_current_x - gp.vehicle[map][vehicleIndex].source_current_y)
+		+ Math.abs(gp.vehicle[map][vehicleIndex].source_destination_x - gp.vehicle[map][vehicleIndex].source_destination_y);
+		float tileSizeFloat = 48f;
+
+		float totalDistance = (float)((totalTiles * tileSizeFloat));
+		float totalDistanceKM = totalDistance/1000;
+		String vehicleType = gp.vehicle[map][vehicleIndex].VehicleName;
+		String CurrentDialog ="";
+		int carbonEmissionRate =0;
+		switch (vehicleType) {
+			case "Bus":
+				CurrentDialog = "You have choose BUS as your choice of vehicle! Good one. ";
+				carbonEmissionRate = 60;
+				break;
+			case "Bike":
+				CurrentDialog = "You have choose Bicycle as your choice of vehicle! Go Green! ";
+				carbonEmissionRate = 0;
+				break;
+			case "Car":
+				CurrentDialog = "You have choose Car as your choice of vehicle! Could have done better! ";
+				carbonEmissionRate = 120;
+				break;
+		
+			default:
+				break;
+		}
+		float carbonFootPrint = totalDistanceKM * (float)carbonEmissionRate;
+		CurrentDialog += "\nYour Total Carbon Footprint for the ride is "+ carbonFootPrint;
+
+		System.out.println(CurrentDialog);
+		gp.ui.currentDialogue = CurrentDialog;
+		gp.gameState = gp.dialougeState;
+		
+
+
+
+		
+	}
+	
 	
 	public void teleport(int map, int col, int row){
 		gp.currentMap = map;

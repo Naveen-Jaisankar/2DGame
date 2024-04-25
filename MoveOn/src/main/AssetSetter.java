@@ -170,7 +170,7 @@ public class AssetSetter {
     
             if (sourceMapIndex >= 0 && sourceMapIndex < gp.maxMap) {
                 if (vehicleIndexPerMap[sourceMapIndex] < gp.vehicle[sourceMapIndex].length) {
-                    gp.vehicle[sourceMapIndex][vehicleIndexPerMap[sourceMapIndex]] = new Vehicle(gp, vehicle.getImageName(), vehicle.getDirection(), 
+                    gp.vehicle[sourceMapIndex][vehicleIndexPerMap[sourceMapIndex]] = new Vehicle(gp,vehicle.vehicleName(), vehicle.getImageName(), vehicle.getDirection(), 
                         vehicle.getSourceDestinationX(), vehicle.getSourceDestinationY(), vehicle.getSourceCurrentX(), vehicle.getSourceCurrentY(), 
                         vehicle.getTargetDestinationX(), vehicle.getTargetDestinationY(), vehicle.getTargetCurrentX(), vehicle.getTargetCurrentY(),
                         sourceMapIndex, vehicle.getTargetMap());

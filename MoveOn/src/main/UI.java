@@ -96,6 +96,8 @@ public class UI {
 		if(gp.gameState == gp.dialougeState){
 			drawPlayerLife();
 			drawDialogueScreen();
+			drawResultsScreen();
+			
 		}
 		//CHARACTER STATE
 		if(gp.gameState==gp.characterState) {
@@ -283,6 +285,24 @@ public class UI {
 		}
 	}
 	public void drawDialogueScreen(){
+		// window
+		int x = gp.tileSize*2;
+		int y = gp.tileSize/2; 
+		int width = gp.screenWidth - (gp.tileSize*4);
+		int height = gp.tileSize*4;
+		drawSubWindow(x,y,width,height);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,24F));
+		x+=gp.tileSize;
+		y+=gp.tileSize;
+		for(String line : currentDialogue.split("\n")){
+			g2.drawString(line, x, y);
+			y+=40;
+
+		}
+		
+	}
+
+	public void drawResultsScreen(){
 		// window
 		int x = gp.tileSize*2;
 		int y = gp.tileSize/2; 

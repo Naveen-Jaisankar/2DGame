@@ -58,7 +58,7 @@ public class VehicleModel {
     public void setTargetMap(int targetMap) {
         this.targetMap = targetMap;
     }
-	public String getVehicleName() {
+	public String vehicleName() {
 		return vehicleName;
 	}
 

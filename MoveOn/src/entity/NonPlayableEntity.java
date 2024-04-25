@@ -5,6 +5,9 @@ import main.GamePanel;
 public abstract class NonPlayableEntity extends Entity{
 	
 	public boolean isInteracted ;
+	public String VehicleName;
+	public int source_current_x;
+	public int source_current_y;
 	public int source_destination_x;
 	public int source_destination_y;
 	public int target_current_x;
@@ -18,13 +21,13 @@ public abstract class NonPlayableEntity extends Entity{
 	public NonPlayableEntity(GamePanel gp,String direction, int speed ,int currentX,int currentY) {
 		super(gp);
 		super.direction = direction;
-		super.speed = 3;
+		super.speed = 5;
 		super.worldX = gp.tileSize*currentX;
 		super.worldY = gp.tileSize*currentY;
 		
 	}
 	
-	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap);
+	public abstract void setDefaultValues(String VehicleName,String imageName, String direction,int sourceX,int sourceY, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap);
 	
 	public abstract void loadImages() ;
 	
@@ -41,7 +44,7 @@ public abstract class NonPlayableEntity extends Entity{
 		super.openDialogBox();
 	}
 	
-	public void setActions(String direction) {
+	public void setActions(String direction,int vehicleIndex) {
 		if(gp.keyHandler.qPressed) {
 			gp.keyHandler.qPressed=Boolean.FALSE;
 			this.isInteracted = Boolean.TRUE;
@@ -84,6 +87,7 @@ public abstract class NonPlayableEntity extends Entity{
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
 		}
+		gp.eHandler.checkEventForVehicles(vehicleIndex);
 		
 	}
 	
