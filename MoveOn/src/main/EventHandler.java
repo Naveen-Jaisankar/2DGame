@@ -93,9 +93,24 @@ public class EventHandler {
 			 if(hit(0,44,14,"any")) {
 				teleport(1,29,26);
 			}
-			 else if(hit(1,29,26,"any")) {
-					teleport(0,44,14);
+			else if(hit(1,29,26,"any")) {
+				teleport(0,44,14);
 				}
+			else if(hit(2,9,14,"any")) {
+				teleport(3,26,25);
+			}
+			else if(hit(2,10,14,"any")) {
+				teleport(3,26,25);
+			}
+			else if(hit(3,26,25,"any")) {
+				teleport(2,10,14);
+			}
+			else if(hit(4,9,13,"any")) {
+				teleport(5,26,25);
+			}
+			else if(hit(5,26,25,"any")) {
+				teleport(4,9,13);
+			}
 //			 else if(hit(0,45,18,"any")) {
 //					teleport(2,8,17);
 //				}
