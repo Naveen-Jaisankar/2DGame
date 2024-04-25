@@ -38,18 +38,21 @@ public class EventHandler {
 		
 	}
 	
-	public void checkEventForVehicles(int vehicleIndex,int sourceDestinationX, int sourceDestinationY,int targetCurrentX, int targetCurrentY,int targetDestinationX, int targetDestinationY) {
-		System.out.println("checkEventForVehicles is called for vehicle");
+	public void checkEventForVehicles(int vehicleInde,int sourceDestinationX, int sourceDestinationY,int targetCurrentX, int targetCurrentY,int targetDestinationX, int targetDestinationY, int sourceMap, int targetMap, int vehicleId) {
+		System.out.println(sourceDestinationX + " " + sourceDestinationY + " " + vehicleInde);
 		
-		int xDistance = Math.abs(gp.vehicle[0][3].worldX - previousEventX);
-		int yDistance = Math.abs(gp.vehicle[0][3].worldY - previousEventY);
+		int xDistance = Math.abs(gp.vehicle[sourceMap][vehicleInde].worldX - previousEventX);
+		int yDistance = Math.abs(gp.vehicle[sourceMap][vehicleInde].worldY - previousEventY);
 		int distance = Math.max(xDistance, yDistance);
 		if(distance>gp.tileSize){
 			canTouchEvent = true;
 		}
+		
 		if(canTouchEvent){
-			if(isVehicleInContactWithTeleportTile(0,sourceDestinationX,sourceDestinationY,"any") && gp.isPlayerInContactWithVehicle) {
-				teleportPlayerAndVehicle(2,targetCurrentX,targetCurrentY,targetDestinationX,targetDestinationY);
+			System.out.println("cantouchevenet");
+			if(isVehicleInContactWithTeleportTile(sourceMap,sourceDestinationX,sourceDestinationY,"any",sourceMap,targetMap,vehicleInde) && gp.isPlayerInContactWithVehicle) {
+				teleportPlayerAndVehicle(targetMap,targetCurrentX,targetCurrentY,targetDestinationX,targetDestinationY,vehicleInde);
+				
 			}
 		}
 	}
@@ -95,28 +98,30 @@ public class EventHandler {
 	}
 	
 	//This method is similar to hit method
-	public boolean isVehicleInContactWithTeleportTile(int map,int col, int row, String reqDirection) {
+	public boolean isVehicleInContactWithTeleportTile(int map,int col, int row, String reqDirection,int sourceMap, int targetMap, int vehicleId) {
+		
 		boolean hit = Boolean.FALSE;
 		if(map==gp.currentMap){
-			gp.vehicle[0][3].solidArea.x = gp.vehicle[0][3].worldX + gp.vehicle[0][3].solidArea.x;
-			gp.vehicle[0][3].solidArea.y = gp.vehicle[0][3].worldY + gp.vehicle[0][3].solidArea.y;
-			eventRect[map][col][row].x = col * gp.tileSize + eventRect[map][col][row].x;
-			eventRect[map][col][row].y = row * gp.tileSize + eventRect[map][col][row].y;
+			gp.vehicle[gp.previousMap][vehicleId].solidArea.x = gp.vehicle[gp.previousMap][vehicleId].worldX + gp.vehicle[gp.previousMap][vehicleId].solidArea.x;
+			gp.vehicle[gp.previousMap][vehicleId].solidArea.y = gp.vehicle[gp.previousMap][vehicleId].worldY + gp.vehicle[gp.previousMap][vehicleId].solidArea.y;
+			eventRect[gp.previousMap][col][row].x = col * gp.tileSize + eventRect[gp.previousMap][col][row].x;
+			eventRect[gp.previousMap][col][row].y = row * gp.tileSize + eventRect[gp.previousMap][col][row].y;
 			
-			if(gp.vehicle[0][3].solidArea.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventDone == false) {
-				if(gp.vehicle[0][3].direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
+			if(gp.vehicle[gp.previousMap][vehicleId].solidArea.intersects(eventRect[gp.previousMap][col][row]) && eventRect[gp.previousMap][col][row].eventDone == false) {
+				if(gp.vehicle[gp.previousMap][vehicleId].direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
 					hit = Boolean.TRUE;
 	
-					previousEventX = gp.vehicle[0][3].worldX;
-					previousEventY=gp.vehicle[0][3].worldY;
+					previousEventX = gp.vehicle[map][vehicleId].worldX;
+					previousEventY=gp.vehicle[map][vehicleId].worldY;
 				}
 			}
 			
-			gp.vehicle[0][3].solidArea.x = gp.vehicle[0][3].solidAreaDefaultX;
-			gp.vehicle[0][3].solidArea.y = gp.vehicle[0][3].solidAreaDefaultY;
-			eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
-			eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
+			gp.vehicle[gp.previousMap][vehicleId].solidArea.x = gp.vehicle[gp.previousMap][vehicleId].solidAreaDefaultX;
+			gp.vehicle[gp.previousMap][vehicleId].solidArea.y = gp.vehicle[gp.previousMap][vehicleId].solidAreaDefaultY;
+			eventRect[gp.previousMap][col][row].x = eventRect[gp.previousMap][col][row].eventRectDefaultX;
+			eventRect[gp.previousMap][col][row].y = eventRect[gp.previousMap][col][row].eventRectDefaultY;
 		}
+		System.out.println("hit "+hit+ " x " + (gp.vehicle[map][vehicleId].worldX / gp.tileSize) + " y :" + (gp.vehicle[map][vehicleId].worldY / gp.tileSize));
 		return hit;
 	}
 	
@@ -170,20 +175,25 @@ public class EventHandler {
 		
 	}
 
-	public void teleportPlayerAndVehicle(int map, int col, int row, int targetDestinationX, int targetDestinationY){
+	public void teleportPlayerAndVehicle(int map, int col, int row, int targetDestinationX, int targetDestinationY, int vehicleId){
+		gp.previousMap = gp.currentMap;
 		gp.currentMap = map;
 		gp.isPlayerInContactWithVehicle = Boolean.TRUE;
 		gp.keyHandler.qPressed = Boolean.TRUE;
 		gp.player.worldX = gp.tileSize * col;
 		gp.player.worldY = gp.tileSize * row;
-		gp.vehicle[map][3].worldX = gp.tileSize * col;
-		gp.vehicle[map][3].worldY = gp.tileSize * row;
-		previousEventX = gp.player.worldX;
-		previousEventY = gp.player.worldY;
+		gp.vehicle[map][vehicleId].worldX = gp.tileSize * col;
+		gp.vehicle[map][vehicleId].worldY = gp.tileSize * row;
+		previousEventX = gp.vehicle[map][vehicleId].worldX;
+		previousEventY = gp.vehicle[map][vehicleId].worldX;
 		canTouchEvent = false;
 		gp.playSoundEffect(13);
-		gp.vehicle[map][3].source_destination_x =targetDestinationX;
-		gp.vehicle[map][3].source_destination_y =targetDestinationY;
+		gp.vehicle[map][vehicleId].source_destination_x = gp.vehicle[gp.previousMap][vehicleId].target_destination_x;
+		gp.vehicle[map][vehicleId].source_destination_y = gp.vehicle[gp.previousMap][vehicleId].target_destination_y;
+//		gp.vehicle[map][vehicleId].worldX = gp.tileSize * col;
+//		gp.vehicle[map][vehicleId].worldY = gp.tileSize * row;
+//		previousEventX = gp.player.worldX;
+//		previousEventY = gp.player.worldY;
 
 	}
 	

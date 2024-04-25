@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class VehicleModel {
 	
+	@SerializedName("vehicle_id")
+	private String vehicleId;
+	
 	@SerializedName("vehicle_name")
 	private String vehicleName;
 	
@@ -36,6 +39,16 @@ public class VehicleModel {
 	
 	@SerializedName("targetCurrentY")
     private int targetCurrentY;
+	
+
+	public String getVehicleId() {
+		return vehicleId;
+	}
+
+
+	public void setVehicleId(String vehicleId) {
+		this.vehicleId = vehicleId;
+	}
 
 	public String getVehicleName() {
 		return vehicleName;

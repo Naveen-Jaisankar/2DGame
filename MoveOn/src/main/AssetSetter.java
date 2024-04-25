@@ -11,13 +11,14 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import entity.Vehicle;
+import model.MapModel;
 import model.VehicleModel;
 
 public class AssetSetter {
     GamePanel gp;
-    List<VehicleModel> vehicles;
-    
-    private static final String ASSETS_FILE_PATH = "MoveOn/res/Assets/assets.json";
+    Type mapDataType  = new TypeToken<List<MapModel>>(){}.getType();
+    List<MapModel> mapAssets;
+    private static final String ASSETS_FILE_PATH = "D:/Eclipse Workspace/2DGame/MoveOn/res/Assets/assets.json";
     
     public AssetSetter(GamePanel gp){
         this.gp =gp;
@@ -149,26 +150,48 @@ public class AssetSetter {
     }
     
     public void loadAssets() {
+//    	Gson gson = new Gson();
+//    	try (FileReader reader = new FileReader(ASSETS_FILE_PATH)) {
+//            Type listType = new TypeToken<List<VehicleModel>>(){}.getType();
+//            vehicles = gson.fromJson(reader, listType);
+//            for (VehicleModel vehicle : vehicles) {
+//                System.out.println(vehicle);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    	
+    	System.out.println("LoadAssets called");
+    	
     	Gson gson = new Gson();
-    	try (FileReader reader = new FileReader(ASSETS_FILE_PATH)) {
-            Type listType = new TypeToken<List<VehicleModel>>(){}.getType();
-            vehicles = gson.fromJson(reader, listType);
-            for (VehicleModel vehicle : vehicles) {
-                System.out.println(vehicle);
+        try (FileReader reader = new FileReader(ASSETS_FILE_PATH)) {
+        	mapAssets = gson.fromJson(reader, mapDataType);
+        	for (MapModel map : mapAssets) {
+                System.out.println("Map Number: " + map.getMap_num());
+                map.getVehicle().forEach(vehicle -> {
+                    System.out.println(vehicle); // Uses the overridden toString method
+                });
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    	
     } 
     
     public void setNPC() {
     	
-    	int i = 0;
-    	for (VehicleModel vehicle : vehicles) {
-    		gp.vehicle[0][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationX(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
-    		gp.vehicle[2][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationY(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
-    		i++;
-    	}
+    	for (MapModel map : mapAssets) {
+            System.out.println("Map Number: " + map.getMap_num());
+            int sourceMap = map.getMap_num();
+            int targetMap = map.getTarget_map_num();
+            map.getVehicle().forEach(vehicle -> {
+            	System.out.println(vehicle.getVehicleId());
+            	int vehicleId = Integer.parseInt(vehicle.getVehicleId());
+                gp.vehicle[sourceMap][vehicleId] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationX(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY(),sourceMap,targetMap,vehicleId);
+            });
+        }
+    	
+    	
     }
 
 }

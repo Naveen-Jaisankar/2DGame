@@ -11,8 +11,17 @@ public abstract class NonPlayableEntity extends Entity{
 	public int target_current_y;
 	public int target_destination_x;
 	public int target_destination_y;
+	public int sourceMap;
+	public int targetMap;
 	public static final String NPC_IMAGE_PATH = "/npc/";
 	public String imageName;
+	public int vehicleId;
+	
+	//new
+	private int reachX;
+	private int reachy;
+	
+
 	
 	public NonPlayableEntity(GamePanel gp,String direction, int speed ,int currentX,int currentY) {
 		super(gp);
@@ -23,7 +32,7 @@ public abstract class NonPlayableEntity extends Entity{
 		
 	}
 	
-	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY);
+	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId);
 	
 	public abstract void loadImages() ;
 	
@@ -40,7 +49,7 @@ public abstract class NonPlayableEntity extends Entity{
 		super.openDialogBox();
 	}
 	
-	public void setActions(String direction) {
+	public void setActions(String direction, int vehicleIndex) {
 		System.out.println("SetActions called");
 		if(gp.keyHandler.qPressed) {
 			gp.keyHandler.qPressed=Boolean.FALSE;
@@ -66,6 +75,7 @@ public abstract class NonPlayableEntity extends Entity{
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
 		}else if(direction.equals("right")) {
+			System.out.println("right" + source_destination_x);
 			if(worldX<=source_destination_x*gp.tileSize) {
 				worldX += speed;
 				gp.player.worldX += speed;
@@ -84,6 +94,7 @@ public abstract class NonPlayableEntity extends Entity{
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
 		}
+		gp.eHandler.checkEventForVehicles(vehicleIndex,this.source_destination_x , this.source_destination_y,this.target_current_x,this.target_current_y,this.target_destination_x,this.target_destination_y,this.sourceMap, this.targetMap ,this.vehicleId );
 		
 	}
 	

@@ -4,19 +4,19 @@ import main.GamePanel;
 
 public class Vehicle extends NonPlayableEntity{
 	
-	public static final int SPEED = 1;
+	public static final int SPEED = 3;
 	
 	public Vehicle(GamePanel gp,String imageName,String direction,int sourceDestinationX,int sourceDestinationY,int sourceCurrentX, int sourceCurrentY,
-			int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY) {
+			int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId) {
 		super(gp,direction,SPEED,sourceCurrentX,sourceCurrentY);
-		setDefaultValues(imageName,direction,sourceDestinationX,sourceDestinationY,targetDestinationX,targetDestinationY,targetCurrentX,targetCurrentY);
+		setDefaultValues(imageName,direction,sourceDestinationX,sourceDestinationY,targetDestinationX,targetDestinationY,targetCurrentX,targetCurrentY,sourceMap,targetMap,vehicleId);
 		loadImages();
 		setInstructions();
 	}
 
 
 	@Override
-	public void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY) {
+	public void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId) {
 		isInteracted = Boolean.FALSE;
 		this.source_destination_x = destinationX ;
 		this.source_destination_y = destinationY ;
@@ -26,6 +26,9 @@ public class Vehicle extends NonPlayableEntity{
 		this.target_destination_y = targetDestinationY ;
 		this.direction = direction;
 		this.imageName = imageName;
+		this.sourceMap = sourceMap;
+		this.targetMap = targetMap;
+		this.vehicleId = vehicleId;
 		
 	}
 
@@ -49,10 +52,11 @@ public class Vehicle extends NonPlayableEntity{
 	@Override
 	public void update() {
 		int npcIndex = gp.cChecker.checkEntity(gp.player, this);
+		int vehicleIndex = gp.cChecker.checkEntity(gp.player, gp.vehicle);
 		if(npcIndex!=999 & (gp.keyHandler.qPressed || isInteracted)) {
 			
-			setActions(this.direction);
-			gp.eHandler.checkEventForVehicles(npcIndex,this.source_destination_x , this.source_destination_y,this.target_current_x,this.target_current_y,this.target_destination_x,this.target_destination_y);
+			setActions(this.direction,vehicleIndex);
+			
 			
 		}
 		
