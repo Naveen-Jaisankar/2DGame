@@ -17,7 +17,7 @@ public class AssetSetter {
     GamePanel gp;
     List<VehicleModel> vehicles;
     
-    private static final String ASSETS_FILE_PATH = "D:/Eclipse Workspace/2DGame/MoveOn/res/Assets/assets.json";
+    private static final String ASSETS_FILE_PATH = "MoveOn/res/Assets/assets.json";
     
     public AssetSetter(GamePanel gp){
         this.gp =gp;

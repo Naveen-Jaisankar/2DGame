@@ -76,12 +76,12 @@ public class EventHandler {
 //			else if(hit(0,10,39,"any")) {
 //				teleport(1,12,13);
 //			}
-//			 if(hit(0,44,14,"any")) {
-//				teleport(1,29,26);
-//			}
-//			 else if(hit(1,29,26,"any")) {
-//					teleport(0,44,14);
-//				}
+			 if(hit(0,44,14,"any")) {
+				teleport(1,29,26);
+			}
+			 else if(hit(1,29,26,"any")) {
+					teleport(0,44,14);
+				}
 //			 else if(hit(0,45,18,"any")) {
 //					teleport(2,8,17);
 //				}
@@ -187,14 +187,14 @@ public class EventHandler {
 
 	}
 	
-//	public void teleport1(int map, int col, int row){
-//		gp.currentMap = map;
-//		gp.vehicle[2][3].worldX = gp.tileSize * col;
-//		gp.vehicle[2][3].worldY = gp.tileSize * row;
-//		previousEventX = gp.vehicle[2][3].worldX;
-//		previousEventY = gp.vehicle[2][3].worldY;
-//		canTouchEvent = false;
-//		gp.playSoundEffect(13);
-//
-//	}
+	public void teleport(int map, int col, int row){
+		gp.currentMap = map;
+		gp.player.worldX = gp.tileSize * col;
+		gp.player.worldY = gp.tileSize * row;
+		previousEventX = gp.player.worldX;
+		previousEventY = gp.player.worldY;
+		canTouchEvent = false;
+		gp.playSoundEffect(13);
+
+	}
 }
