@@ -9,15 +9,17 @@ public class Vehicle extends NonPlayableEntity{
 	public Vehicle(GamePanel gp,String imageName,String direction,int sourceDestinationX,int sourceDestinationY,int sourceCurrentX, int sourceCurrentY,
 			int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId) {
 		super(gp,direction,SPEED,sourceCurrentX,sourceCurrentY);
-		setDefaultValues(imageName,direction,sourceDestinationX,sourceDestinationY,targetDestinationX,targetDestinationY,targetCurrentX,targetCurrentY,sourceMap,targetMap,vehicleId);
+		setDefaultValues(imageName,direction,sourceDestinationX,sourceDestinationY,targetDestinationX,targetDestinationY,targetCurrentX,targetCurrentY,sourceMap,targetMap,vehicleId,sourceCurrentX,sourceCurrentY);
 		loadImages();
 		setInstructions();
 	}
 
 
 	@Override
-	public void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId) {
+	public void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId,int sourceCurrentX, int sourceCurrentY) {
 		isInteracted = Boolean.FALSE;
+		this.source_current_x = sourceCurrentX;
+		this.source_current_y = sourceCurrentY;
 		this.source_destination_x = destinationX ;
 		this.source_destination_y = destinationY ;
 		this.target_current_x = targetCurrentX ;
@@ -54,7 +56,8 @@ public class Vehicle extends NonPlayableEntity{
 		int npcIndex = gp.cChecker.checkEntity(gp.player, this);
 		int vehicleIndex = gp.cChecker.checkEntity(gp.player, gp.vehicle);
 		if(npcIndex!=999 & (gp.keyHandler.qPressed || isInteracted)) {
-			
+			reachX = this.source_destination_x;
+			reachY = this.source_destination_y;
 			setActions(this.direction,vehicleIndex);
 			
 			

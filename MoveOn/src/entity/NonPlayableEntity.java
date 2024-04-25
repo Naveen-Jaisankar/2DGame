@@ -5,6 +5,8 @@ import main.GamePanel;
 public abstract class NonPlayableEntity extends Entity{
 	
 	public boolean isInteracted ;
+	public int source_current_x;
+	public int source_current_y;
 	public int source_destination_x;
 	public int source_destination_y;
 	public int target_current_x;
@@ -18,8 +20,8 @@ public abstract class NonPlayableEntity extends Entity{
 	public int vehicleId;
 	
 	//new
-	private int reachX;
-	private int reachy;
+	public int reachX;
+	public int reachY;
 	
 
 	
@@ -32,7 +34,7 @@ public abstract class NonPlayableEntity extends Entity{
 		
 	}
 	
-	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId);
+	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap,int vehicleId,int sourceCurrentX, int sourceCurrentY);
 	
 	public abstract void loadImages() ;
 	
@@ -50,46 +52,47 @@ public abstract class NonPlayableEntity extends Entity{
 	}
 	
 	public void setActions(String direction, int vehicleIndex) {
-		System.out.println("SetActions called");
+//		System.out.println("SetActions called");
 		if(gp.keyHandler.qPressed) {
 			gp.keyHandler.qPressed=Boolean.FALSE;
 			this.isInteracted = Boolean.TRUE;
 			gp.isPlayerInContactWithVehicle = Boolean.TRUE;
 		}	
 		if(direction.equals("down")) {
-			if(worldY<=source_destination_y*gp.tileSize) {
+			if(worldY<=reachY*gp.tileSize) {
 				worldY += speed;
 				gp.player.worldY += speed;
-			}else if(worldY >= source_destination_y*gp.tileSize) {
-				gp.player.worldY = source_destination_y*(gp.tileSize-2);
+			}else if(worldY >= reachY*gp.tileSize) {
+				gp.player.worldY = reachY*(gp.tileSize-2);
 				isInteracted = Boolean.FALSE;
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}		
 		}else if(direction.equals("up")) {
-			if(worldY>=source_destination_y*gp.tileSize) {
+			if(worldY>=reachY*gp.tileSize) {
 				worldY -= speed;
 				gp.player.worldY -= speed;
-			}else if(worldY <= source_destination_y*gp.tileSize) {
-				gp.player.worldY = source_destination_y*(gp.tileSize+2);
+			}else if(worldY <= reachY*gp.tileSize) {
+				gp.player.worldY = reachY*(gp.tileSize+2);
 				isInteracted = Boolean.FALSE;
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
 		}else if(direction.equals("right")) {
-			System.out.println("right" + source_destination_x);
-			if(worldX<=source_destination_x*gp.tileSize) {
+			if(worldX<=reachX*gp.tileSize) {
 				worldX += speed;
 				gp.player.worldX += speed;
-			}else if(worldX >= source_destination_x*gp.tileSize) {
-				gp.player.worldX = source_destination_x*(gp.tileSize-2);
+			}else if(worldX >= reachX*gp.tileSize) {
+				gp.player.worldX = reachX*(gp.tileSize-2);
 				isInteracted = Boolean.FALSE;
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
+				gp.vehicle[gp.currentMap][vehicleId].worldX = gp.vehicle[gp.currentMap][vehicleId].source_current_x*gp.tileSize;
+				gp.vehicle[gp.currentMap][vehicleId].worldY = gp.vehicle[gp.currentMap][vehicleId].source_current_y*gp.tileSize;
 			}
 		}else if(direction.equals("left")) {
-			if(worldX>=source_destination_x*gp.tileSize) {
+			if(worldX>=reachX*gp.tileSize) {
 				worldX -= speed;
 				gp.player.worldX -= speed;
-			}else if(worldX <= source_destination_x*gp.tileSize) {
-				gp.player.worldX =source_destination_x*(gp.tileSize+2);
+			}else if(worldX <= reachX*gp.tileSize) {
+				gp.player.worldX =reachX*(gp.tileSize+2);
 				isInteracted = Boolean.FALSE;
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
