@@ -242,8 +242,8 @@ public class EventHandler {
 		// Update the map and position
 		gp.prevMap = gp.currentMap;
 		gp.currentMap = targetMap;
-		gp.player.worldX = targetCurrentX * (gp.tileSize-2) ;
-		gp.player.worldY = targetCurrentY * (gp.tileSize-2) ;
+		gp.player.worldX = targetCurrentX * (gp.tileSize-3) ;
+		gp.player.worldY = targetCurrentY * (gp.tileSize-3) ;
 		
 		// Update the vehicle position if it is the same map
 		// if (gp.prevMap == gp.currentMap) {
