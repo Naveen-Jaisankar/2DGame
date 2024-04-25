@@ -21,7 +21,7 @@ public class Entity {
 	public Rectangle attackArea = new Rectangle(0,0,0,0);
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collision = false;
-	String dialogues[] = new String[20];
+	public String dialogues[] = new String[20];
 
 	// state
 	public int worldX,worldY;
@@ -54,6 +54,8 @@ public class Entity {
 	public int life;
 	public int maxMana;
 	public int mana;
+	public int maxCarbonFootPrints;
+	public int carbonFootPrints;
 	public int ammo;
 	public int level;
 	public int strength;
@@ -256,7 +258,7 @@ public class Entity {
 				damage =0;
 			}
 			
-			gp.player.life-=damage;
+			gp.player.life-=1;
 			gp.player.invincible = true;
 		}
 	}

@@ -52,7 +52,7 @@ public class CollisionChecker {
                 break;
             case "right":
                 entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
-                System.out.println("Col : " + entityRightCol + "Row : " + entityTopRow);
+                // System.out.println("Col : " + entityRightCol + "Row : " + entityTopRow);
                 tile1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
                 tile2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
                 if(gp.tileM.tile[tile1].colllision == true || gp.tileM.tile[tile2].colllision == true){

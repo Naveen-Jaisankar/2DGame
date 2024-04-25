@@ -10,14 +10,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import entity.MON_GreenSlime;
+import entity.NPC_OldMan;
+import entity.NonPlayableEntity;
 import entity.Vehicle;
 import model.VehicleModel;
+import object.OBJ_Chest;
 
 public class AssetSetter {
     GamePanel gp;
     List<VehicleModel> vehicles;
     
-    private static final String ASSETS_FILE_PATH = "MoveOn/res/Assets/assets.json";
+    private static final String ASSETS_FILE_PATH = "D:/Eclipse Workspace/2DGame/MoveOn/res/Assets/assets.json";
     
     public AssetSetter(GamePanel gp){
         this.gp =gp;
@@ -25,12 +29,7 @@ public class AssetSetter {
     }
 
     public void setObject(){
-//		int mapNum =0;
-//        int i =0;
-//        gp.obj[mapNum][i] = new OBJ_Coin_Bronze(gp);
-//    	gp.obj[mapNum][i].worldX = gp.tileSize*25;
-//    	gp.obj[mapNum][i].worldY = gp.tileSize*23;
-//        i++;
+		
 //        gp.obj[mapNum][i] = new OBJ_Coin_Bronze(gp);
 //    	gp.obj[mapNum][i].worldX = gp.tileSize*21;
 //    	gp.obj[mapNum][i].worldY = gp.tileSize*19;
@@ -68,31 +67,54 @@ public class AssetSetter {
 //
 //    }
     public void setMonster(){
-		int mapNum =0;
+		int mapNum =1;
     	int i=0;
-//        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-//        gp.monster[mapNum][i].worldX = gp.tileSize*23;
-//        gp.monster[mapNum][i].worldY = gp.tileSize*36;
-//        i++;
-//        
-//        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-//        gp.monster[mapNum][i].worldX = gp.tileSize*23;
-//        gp.monster[mapNum][i].worldY = gp.tileSize*37;
-//        i++;
-//        
-//        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-//        gp.monster[mapNum][i].worldX = gp.tileSize*24;
-//        gp.monster[mapNum][i].worldY = gp.tileSize*37;
-//        i++;
-//
-//        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-//        gp.monster[mapNum][i].worldX = gp.tileSize*34;
-//        gp.monster[mapNum][i].worldY = gp.tileSize*42;
-//        i++;
-//        
-//        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-//        gp.monster[mapNum][i].worldX = gp.tileSize*38;
-//        gp.monster[mapNum][i].worldY = gp.tileSize*42;
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*12;
+       gp.monster[mapNum][i].worldY = gp.tileSize*25;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*42;
+       gp.monster[mapNum][i].worldY = gp.tileSize*10;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*42;
+       gp.monster[mapNum][i].worldY = gp.tileSize*15;
+       i++;
+       
+       mapNum+=2;i=0;
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*9;
+       gp.monster[mapNum][i].worldY = gp.tileSize*24;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*14;
+       gp.monster[mapNum][i].worldY = gp.tileSize*14;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*31;
+       gp.monster[mapNum][i].worldY = gp.tileSize*6;
+       i++;
+       
+       mapNum+=2;i=0;
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*33;
+       gp.monster[mapNum][i].worldY = gp.tileSize*21;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*20;
+       gp.monster[mapNum][i].worldY = gp.tileSize*10;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*9;
+       gp.monster[mapNum][i].worldY = gp.tileSize*21;
+       i++;
 
     }
     
@@ -154,21 +176,58 @@ public class AssetSetter {
             Type listType = new TypeToken<List<VehicleModel>>(){}.getType();
             vehicles = gson.fromJson(reader, listType);
             for (VehicleModel vehicle : vehicles) {
-                System.out.println(vehicle);
+                // System.out.println(vehicle);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     } 
     
-    public void setNPC() {
+    // public void setNPC() {
     	
-    	int i = 0;
-    	for (VehicleModel vehicle : vehicles) {
-    		gp.vehicle[0][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationX(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
-    		gp.vehicle[2][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationY(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
-    		i++;
-    	}
+    // 	int i = 0;
+    // 	for (VehicleModel vehicle : vehicles) {
+    // 		gp.vehicle[0][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationX(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
+    // 		gp.vehicle[2][i] = new Vehicle(gp, vehicle.getImageName(),vehicle.getDirection(),vehicle.getSourceDestinationY(),vehicle.getSourceDestinationY(),vehicle.getSourceCurrentX(),vehicle.getSourceCurrentY(),vehicle.getTargetDestinationX(),vehicle.getTargetDestinationY(),vehicle.getTargetCurrentX(),vehicle.getTargetCurrentY());
+    // 		i++;
+    // 	}
+    // }
+
+
+    public void setNPC() {
+        int[] vehicleIndexPerMap = new int[gp.maxMap];
+    
+        for (VehicleModel vehicle : vehicles) {
+            int sourceMapIndex = vehicle.getSourceMap();
+    
+            if (sourceMapIndex >= 0 && sourceMapIndex < gp.maxMap) {
+                if (vehicleIndexPerMap[sourceMapIndex] < gp.vehicle[sourceMapIndex].length) {
+                    gp.vehicle[sourceMapIndex][vehicleIndexPerMap[sourceMapIndex]] = new Vehicle(gp,vehicle.vehicleName(), vehicle.getImageName(), vehicle.getDirection(), 
+                        vehicle.getSourceDestinationX(), vehicle.getSourceDestinationY(), vehicle.getSourceCurrentX(), vehicle.getSourceCurrentY(), 
+                        vehicle.getTargetDestinationX(), vehicle.getTargetDestinationY(), vehicle.getTargetCurrentX(), vehicle.getTargetCurrentY(),
+                        sourceMapIndex, vehicle.getTargetMap());
+                    
+                    vehicleIndexPerMap[sourceMapIndex]++;
+                } else {
+                    System.err.println("No more space for new vehicles on map: " + sourceMapIndex);
+                }
+            } else {
+                System.err.println("Invalid source map index: " + sourceMapIndex);
+            }
+
+
+            int i =0;
+            int mapNum =1;
+        
+            gp.npc[mapNum][i] = new NPC_OldMan(gp);
+            gp.npc[mapNum][i].worldX = gp.tileSize*36;
+            gp.npc[mapNum][i].worldY = gp.tileSize*26;
+            i++;
+        }
+
+
     }
+
+    
 
 }

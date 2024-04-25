@@ -60,8 +60,10 @@ public class Player extends Entity{
 		level =1;
 		maxLife = 6;
 		life = maxLife;
-		maxMana = 4;
+		maxMana = 10;
 		mana = maxMana;
+		maxCarbonFootPrints = 300;
+		carbonFootPrints = maxCarbonFootPrints;
 		ammo = 10;
 		strength = 1;//strength >>>, damage >>>
 		dexterity =1;// dexterity >>>, damage <<<
@@ -86,6 +88,7 @@ public class Player extends Entity{
 	public void restoreLifeAndMana(){
 		life = maxLife;
 		mana = maxMana;
+		carbonFootPrints = maxCarbonFootPrints;
 		invincible = false;
 	}
 	
@@ -170,6 +173,7 @@ public class Player extends Entity{
 			int objIndex =  gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
+			
 //			check NPC COllision
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
@@ -251,6 +255,13 @@ public class Player extends Entity{
 			gp.stopMusic();
 			gp.playSoundEffect(12);
 		}
+
+		if(carbonFootPrints<=0){
+			gp.gameState = gp.gameOverState;
+			gp.ui.commandNum=-1;
+//			gp.stopMusic();
+			gp.playSoundEffect(12);
+		}
 		
 	}
 
@@ -306,13 +317,16 @@ public class Player extends Entity{
 			if(index!=999) {
 				attackCancelled = Boolean.TRUE;
 				gp.gameState = gp.dialougeState;
-				gp.npc[gp.currentMap][index].speak();
+				gp.npc[gp.currentMap][index].openDialogBox();
 
 			}
 				
 		}
 		
 	}
+
+
+	
 	
 	public void interactVehicle(int index) {
 		if(index!=999) {
@@ -409,7 +423,7 @@ public class Player extends Entity{
 		if(index != 999) {
 			//PICKUP ONLY ITEMS
 			if(gp.obj[gp.currentMap][index].type == type_pickUpOnly) {
-				System.out.println("Picking : " +  gp.obj[gp.currentMap][index].name);
+				// System.out.println("Picking : " +  gp.obj[gp.currentMap][index].name);
 				gp.obj[gp.currentMap][index].use(this);
 				gp.obj[gp.currentMap][index] = null;
 			}

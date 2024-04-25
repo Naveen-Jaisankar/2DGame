@@ -74,7 +74,12 @@ public class KeyHandler implements KeyListener{
 		}
 		if(code == KeyEvent.VK_ENTER) {
 			if(gp.ui.commandNum==0){
-				gp.ui.titleScreenState =1;
+				//gp.ui.titleScreenState =1;
+				gp.gameState = gp.playState;
+				gp.gameState = gp.dialougeState;
+				String dialogue = "Hey Kiddo,Welcome to Move on Adventures 2D Game.\nYou are a school student now and you have been assigned\nfew task today. It's time to go to school now,"
+						+ " You have four transporation mode.\nYour carbon footprints threshold is 300 gm/days. Please use it wisely";
+				gp.ui.drawIntroScreen(dialogue);
 			}	
 			if(gp.ui.commandNum==1){
 				// gp.gameState = add later

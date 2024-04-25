@@ -5,6 +5,9 @@ import main.GamePanel;
 public abstract class NonPlayableEntity extends Entity{
 	
 	public boolean isInteracted ;
+	public String VehicleName;
+	public int source_current_x;
+	public int source_current_y;
 	public int source_destination_x;
 	public int source_destination_y;
 	public int target_current_x;
@@ -13,21 +16,22 @@ public abstract class NonPlayableEntity extends Entity{
 	public int target_destination_y;
 	public static final String NPC_IMAGE_PATH = "/npc/";
 	public String imageName;
-	
+	public int sourceMap;
+	public int targetMap;
 	public NonPlayableEntity(GamePanel gp,String direction, int speed ,int currentX,int currentY) {
 		super(gp);
 		super.direction = direction;
-		super.speed = speed;
+		super.speed = 5;
 		super.worldX = gp.tileSize*currentX;
 		super.worldY = gp.tileSize*currentY;
 		
 	}
 	
-	public abstract void setDefaultValues(String imageName, String direction, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY);
+	public abstract void setDefaultValues(String VehicleName,String imageName, String direction,int sourceX,int sourceY, int destinationX, int destinationY,int targetDestinationX,int targetDestinationY,int targetCurrentX,int targetCurrentY,int sourceMap, int targetMap);
 	
 	public abstract void loadImages() ;
 	
-	public abstract void setInstructions();
+	public abstract void setInstructions( String name);
 	
 	public abstract void update();
 	
@@ -40,8 +44,7 @@ public abstract class NonPlayableEntity extends Entity{
 		super.openDialogBox();
 	}
 	
-	public void setActions(String direction) {
-		System.out.println("SetActions called");
+	public void setActions(String direction,int vehicleIndex) {
 		if(gp.keyHandler.qPressed) {
 			gp.keyHandler.qPressed=Boolean.FALSE;
 			this.isInteracted = Boolean.TRUE;
@@ -84,6 +87,7 @@ public abstract class NonPlayableEntity extends Entity{
 				gp.isPlayerInContactWithVehicle = Boolean.FALSE;
 			}
 		}
+		gp.eHandler.checkEventForVehicles(vehicleIndex);
 		
 	}
 	
