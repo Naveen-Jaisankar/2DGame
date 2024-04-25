@@ -12,6 +12,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import entity.Entity;
+import entity.NonPlayableEntity;
 import entity.Player;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
@@ -29,8 +30,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenHeight = tileSize * maxScreenRow;
 	
 	
-	public final int maxWorldCol = 50;
-	public final int maxWorldRow = 50;
+	public final int maxWorldCol = 54;
+	public final int maxWorldRow = 32;
 	public final int maxMap = 10;
 	public int currentMap = 0;
 
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this,keyHandler);
 	public Entity[][] obj = new Entity[maxMap][20];
 	public Entity npc[][] = new Entity[maxMap][10];
+	public NonPlayableEntity vehicle[][] = new NonPlayableEntity[maxMap][10];
 	public Entity monster[][] = new Entity[maxMap][20];
 	public InteractiveTile iTile [][] = new InteractiveTile[maxMap][50];
 	public ArrayList<Entity> entityList = new ArrayList<>();
@@ -74,6 +76,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int characterState = 4;
 	public final int optionsState = 5;
 	public final int gameOverState = 6;
+	
+	//Player 
+	public boolean isPlayerInContactWithVehicle = Boolean.FALSE;
 	
 	
 	public GamePanel() {
@@ -164,6 +169,12 @@ public class GamePanel extends JPanel implements Runnable{
 			for(int i=0;i<npc[1].length;i++) {
 				if(npc[currentMap][i]!= null) {
 					npc[currentMap][i].update();
+				}
+			}
+			
+			for(int i=0;i<vehicle[1].length;i++) {
+				if(vehicle[currentMap][i]!= null) {
+					vehicle[currentMap][i].update();
 				}
 			}
 		}
@@ -268,6 +279,14 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 		
+		for(int i=0; i<vehicle[1].length;i++){
+			if(vehicle[currentMap][i]!=null){
+				entityList.add(vehicle[currentMap][i]);
+			}
+		}
+		
+		
+		
 		// Sort entities based on worldY
 		Collections.sort(entityList, new Comparator<Entity>() {
 
@@ -282,7 +301,11 @@ public class GamePanel extends JPanel implements Runnable{
 		// draw
 
 		for(int i=0;i<entityList.size();i++){
-			entityList.get(i).draw(g2);
+			if(entityList.get(i).name =="player" && !isPlayerInContactWithVehicle) {
+				entityList.get(i).draw(g2);
+			}else if(entityList.get(i).name !="player") {
+				entityList.get(i).draw(g2);
+			}
 		}
 
 		// once drawn empty the entitylist
