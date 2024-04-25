@@ -258,7 +258,7 @@ public class Entity {
 				damage =0;
 			}
 			
-			gp.player.life-=damage;
+			gp.player.life-=1;
 			gp.player.invincible = true;
 		}
 	}

@@ -60,7 +60,7 @@ public class Player extends Entity{
 		level =1;
 		maxLife = 6;
 		life = maxLife;
-		maxMana = 4;
+		maxMana = 10;
 		mana = maxMana;
 		maxCarbonFootPrints = 300;
 		carbonFootPrints = maxCarbonFootPrints;
@@ -259,7 +259,7 @@ public class Player extends Entity{
 		if(carbonFootPrints<=0){
 			gp.gameState = gp.gameOverState;
 			gp.ui.commandNum=-1;
-			gp.stopMusic();
+//			gp.stopMusic();
 			gp.playSoundEffect(12);
 		}
 		

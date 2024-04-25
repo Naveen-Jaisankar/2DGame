@@ -90,27 +90,65 @@ public class EventHandler {
 //			else if(hit(0,10,39,"any")) {
 //				teleport(1,12,13);
 //			}
-			 if(hit(0,44,14,"any")) {
-				teleport(1,29,26);
-			}
-			else if(hit(1,29,26,"any")) {
-				teleport(0,44,14);
-				}
-			else if(hit(2,9,14,"any")) {
+			
+			if(hit(2,9,14,"any")) {
 				teleport(3,26,25);
 			}
 			else if(hit(2,10,14,"any")) {
-				teleport(3,26,25);
+				if(gp.player.coin!=0 && gp.player.coin %3 == 0) {
+					teleport(3,26,25);
+				}else {
+					gp.ui.drawIntroScreen("You don't have enough gem, Please destroy the monster and collect gem");
+				}
+				
 			}
-			else if(hit(3,26,25,"any")) {
-				teleport(2,10,14);
+			else if(hit(6,44,14,"any")) {
+				if(gp.player.coin!=0 && gp.player.coin %3 == 0) {
+					teleport(1,29,26);
+				}else {
+					gp.gameState = gp.dialougeState;
+					gp.ui.currentDialogue = "You don't have enough gem, Please destroy the monster and collect gem";
+				}
+				
 			}
-			else if(hit(4,9,13,"any")) {
-				teleport(5,26,25);
+			else if(hit(1,29,26,"any")&& gp.player.coin!=0 && gp.player.coin %3 == 0) {
+				if(gp.player.coin!=0 && gp.player.coin %3 == 0) {
+					teleport(0,44,14);
+				}else {
+					gp.gameState = gp.dialougeState;
+					gp.ui.currentDialogue = "You don't have enough gem, Please destroy the monster and collect gem";
+				}
+				
+			} 
+			else if(hit(3,26,25,"any") && gp.player.coin!=0 && gp.player.coin %3 == 0) {
+				if(gp.player.coin!=0 && gp.player.coin %3 == 0) {
+					teleport(2,10,14);
+				}else {
+					gp.gameState = gp.dialougeState;
+					gp.ui.currentDialogue = "You don't have enough gem, Please destroy the monster and collect gem";
+				}
+				
 			}
-			else if(hit(5,26,25,"any")) {
-				teleport(4,9,13);
+			else if(hit(4,9,13,"any") && gp.player.coin!=0 && gp.player.coin %3 == 0) {
+				if(gp.player.coin!=0 && gp.player.coin %3 == 0) {
+					teleport(5,26,25);
+				}else {
+					gp.gameState = gp.dialougeState;
+					gp.ui.currentDialogue = "You don't have enough gem, Please destroy the monster and collect gem";
+				}
+				
 			}
+			else if(hit(5,26,25,"any")&& gp.player.coin!=0 && gp.player.coin %3 == 0) {
+				
+				if(gp.player.coin!=0 && gp.player.coin %3 == 0) {
+					teleport(4,9,13);
+				}else {
+					gp.gameState = gp.dialougeState;
+					gp.ui.currentDialogue = "You don't have enough gem, Please destroy the monster and collect gem";
+				}
+			}
+			
+			 
 //			 else if(hit(0,45,18,"any")) {
 //					teleport(2,8,17);
 //				}
@@ -257,15 +295,19 @@ public class EventHandler {
 		// Update the map and position
 		gp.prevMap = gp.currentMap;
 		gp.currentMap = targetMap;
-		gp.player.worldX = targetCurrentX * (gp.tileSize-3) ;
-		gp.player.worldY = targetCurrentY * (gp.tileSize-3) ;
+		
+		
+		
 		
 		// Update the vehicle position if it is the same map
 		// if (gp.prevMap == gp.currentMap) {
 			gp.vehicle[gp.currentMap][vehicleIndex].worldX = targetCurrentX * gp.tileSize;
 			gp.vehicle[gp.currentMap][vehicleIndex].worldY = targetCurrentY * gp.tileSize;
 		// }
-	
+			
+			gp.player.worldX = gp.vehicle[gp.currentMap][vehicleIndex].worldX - gp.tileSize ;
+			gp.player.worldY = gp.vehicle[gp.currentMap][vehicleIndex].worldY - gp.tileSize  ;
+			
 		// Reset interaction flags
 		gp.isPlayerInContactWithVehicle = false;
 		gp.keyHandler.qPressed = false;

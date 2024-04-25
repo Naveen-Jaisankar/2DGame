@@ -21,7 +21,7 @@ public class AssetSetter {
     GamePanel gp;
     List<VehicleModel> vehicles;
     
-    private static final String ASSETS_FILE_PATH = "MoveOn/res/Assets/assets.json";
+    private static final String ASSETS_FILE_PATH = "D:/Eclipse Workspace/2DGame/MoveOn/res/Assets/assets.json";
     
     public AssetSetter(GamePanel gp){
         this.gp =gp;
@@ -82,6 +82,38 @@ public class AssetSetter {
        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
        gp.monster[mapNum][i].worldX = gp.tileSize*42;
        gp.monster[mapNum][i].worldY = gp.tileSize*15;
+       i++;
+       
+       mapNum+=2;i=0;
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*9;
+       gp.monster[mapNum][i].worldY = gp.tileSize*24;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*14;
+       gp.monster[mapNum][i].worldY = gp.tileSize*14;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*31;
+       gp.monster[mapNum][i].worldY = gp.tileSize*6;
+       i++;
+       
+       mapNum+=2;i=0;
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*33;
+       gp.monster[mapNum][i].worldY = gp.tileSize*21;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*20;
+       gp.monster[mapNum][i].worldY = gp.tileSize*10;
+       i++;
+       
+       gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+       gp.monster[mapNum][i].worldX = gp.tileSize*9;
+       gp.monster[mapNum][i].worldY = gp.tileSize*21;
        i++;
 
     }

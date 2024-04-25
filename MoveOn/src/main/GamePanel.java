@@ -110,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	}
 	public void restart(){
+		this.currentMap = 0;
 		player.setDefaultValues();
 		player.setItems();
 		aSetter.setObject();

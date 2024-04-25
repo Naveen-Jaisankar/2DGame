@@ -795,6 +795,32 @@ public class UI {
 
 	}
 	
+	public void drawIntroScreen(String currentDialogues) {
+		int frameX = gp.tileSize*6;
+		int frameY = gp.tileSize*6;
+		int textX = frameX + gp.tileSize;
+		int textY = frameY + gp.tileSize;
+		this.currentDialogue = currentDialogues;
+//		for(String line: currentDialogue.split("\n")){
+//			
+//			g2.drawString(line, textX, textY);
+//			textY+=40;
+//
+//		}
+//		
+//		String text = "Back";
+//		textX = getXForCenteredText(text);
+//		textY= frameY+gp.tileSize*9;
+//		g2.drawString(text, textX, textY);
+//		if(commandNum == 0){
+//			g2.drawString(">", textX-25, textY);
+//			if(gp.keyHandler.enterPressed == true){
+//				subState =0;
+//
+//			}
+//		}
+	}
+	
 	public void drawSubWindow(int x,int y,int width,int height){
 		Color c = new Color(0,0,0,210);
 		g2.setColor(c);

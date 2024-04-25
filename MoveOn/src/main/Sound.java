@@ -55,7 +55,7 @@ public class Sound {
 	}
 	
 	public void stop() {
-		clip.stop();
+//		clip.stop();
 	}
 
 	public void checVolume(){
