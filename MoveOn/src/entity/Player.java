@@ -62,6 +62,8 @@ public class Player extends Entity{
 		life = maxLife;
 		maxMana = 4;
 		mana = maxMana;
+		maxCarbonFootPrints = 300;
+		carbonFootPrints = maxCarbonFootPrints;
 		ammo = 10;
 		strength = 1;//strength >>>, damage >>>
 		dexterity =1;// dexterity >>>, damage <<<
@@ -86,6 +88,7 @@ public class Player extends Entity{
 	public void restoreLifeAndMana(){
 		life = maxLife;
 		mana = maxMana;
+		carbonFootPrints = maxCarbonFootPrints;
 		invincible = false;
 	}
 	
@@ -247,6 +250,13 @@ public class Player extends Entity{
 			mana = maxMana;
 		}
 		if(life<=0){
+			gp.gameState = gp.gameOverState;
+			gp.ui.commandNum=-1;
+			gp.stopMusic();
+			gp.playSoundEffect(12);
+		}
+
+		if(carbonFootPrints<=0){
 			gp.gameState = gp.gameOverState;
 			gp.ui.commandNum=-1;
 			gp.stopMusic();

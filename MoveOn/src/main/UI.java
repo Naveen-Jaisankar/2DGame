@@ -317,6 +317,8 @@ public class UI {
 			y+=40;
 
 		}
+
+		gp.results.saveResults();
 		
 	}
 	
@@ -342,10 +344,11 @@ public class UI {
 		textY += lineHeight;
 		g2.drawString("Mana",textX,textY);
 		textY += lineHeight;
+		g2.drawString("C02",textX,textY);
+		textY += lineHeight;
 		g2.drawString("Strength",textX,textY);
 		textY += lineHeight;
-		g2.drawString("Dexterity",textX,textY);
-		textY += lineHeight;
+		
 		g2.drawString("Attack",textX,textY);
 		textY += lineHeight;
 		g2.drawString("Defense",textX,textY);
@@ -379,16 +382,20 @@ public class UI {
 		textX = getXForAlignToRightText(value,tailX);
 		g2.drawString(value, textX, textY);
 		textY += lineHeight;
+		value = String.valueOf(gp.player.carbonFootPrints + "/" + gp.player.maxCarbonFootPrints);
+		textX = getXForAlignToRightText(value,tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
 		
 		value = String.valueOf(gp.player.strength);
 		textX = getXForAlignToRightText(value,tailX);
 		g2.drawString(value, textX, textY);
 		textY += lineHeight;
 		
-		value = String.valueOf(gp.player.dexterity);
-		textX = getXForAlignToRightText(value,tailX);
-		g2.drawString(value, textX, textY);
-		textY += lineHeight;
+		// value = String.valueOf(gp.player.dexterity);
+		// textX = getXForAlignToRightText(value,tailX);
+		// g2.drawString(value, textX, textY);
+		// textY += lineHeight;
 		
 		
 		value = String.valueOf(gp.player.attack);

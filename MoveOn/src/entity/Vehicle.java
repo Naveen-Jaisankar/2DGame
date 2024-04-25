@@ -11,7 +11,7 @@ public class Vehicle extends NonPlayableEntity{
 		super(gp,direction,SPEED,sourceCurrentX,sourceCurrentY);
 		setDefaultValues(VehicleName,imageName,direction,sourceCurrentX,sourceCurrentY,sourceDestinationX,sourceDestinationY,targetDestinationX,targetDestinationY,targetCurrentX,targetCurrentY,currentMap,targetMap);
 		loadImages();
-		setInstructions();
+		setInstructions(VehicleName);
 	}
 
 // 	public Vehicle(GamePanel gp, String imageName, String direction, int sourceDestinationX, int sourceDestinationY, int sourceCurrentX, int sourceCurrentY,
@@ -55,8 +55,21 @@ public class Vehicle extends NonPlayableEntity{
 	}
 
 	@Override
-	public void setInstructions() {
-		dialogues[0] = "Press q to Enter the" + this.name;		
+	public void setInstructions(String vehicleName) {
+		switch (vehicleName) {
+			case "Bus":
+				dialogues[0] = "Vehicle: BUS, \naverage time taken per KM: 15 minutes,\nAverage CarbonFootPrint: 60 grams\nPress Q to enter";
+				break;
+			case "Bike":
+				dialogues[0] = "Vehicle: BICYCLE, \naverage time taken per KM: 20 minutes,\nAverage CarbonFootPrint: 0 grams\nPress Q to enter";
+				break;
+			case "Car":
+				dialogues[0] = "Vehicle: CAR, \naverage time taken per KM: 5 minutes,\nAverage CarbonFootPrint: 180 grams\nPress Q to enter";
+				break;
+			default:
+				break;
+		}	
+
 	}
 
 	@Override

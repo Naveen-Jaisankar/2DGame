@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public UI ui = new UI(this);
 	public EventHandler eHandler = new EventHandler(this);
 	Config config = new Config(this);
+	GameResults results = new GameResults(this);
 	
 	
 	

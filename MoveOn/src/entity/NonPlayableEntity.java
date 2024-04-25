@@ -31,7 +31,7 @@ public abstract class NonPlayableEntity extends Entity{
 	
 	public abstract void loadImages() ;
 	
-	public abstract void setInstructions();
+	public abstract void setInstructions( String name);
 	
 	public abstract void update();
 	

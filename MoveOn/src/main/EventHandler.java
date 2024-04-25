@@ -304,6 +304,9 @@ public class EventHandler {
 				break;
 		}
 		float carbonFootPrint = totalDistanceKM * (float)carbonEmissionRate;
+		gp.player.carbonFootPrints -= carbonFootPrint;
+		System.out.println("remaining foootprints "+gp.player.carbonFootPrints);
+		CurrentDialog += "\nTotal kms travlled for the ride is "+ totalDistanceKM+" km";
 		CurrentDialog += "\nYour Total Carbon Footprint for the ride is "+ carbonFootPrint;
 
 		System.out.println(CurrentDialog);

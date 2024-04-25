@@ -54,6 +54,8 @@ public class Entity {
 	public int life;
 	public int maxMana;
 	public int mana;
+	public int maxCarbonFootPrints;
+	public int carbonFootPrints;
 	public int ammo;
 	public int level;
 	public int strength;
